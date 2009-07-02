@@ -1,0 +1,15 @@
+<!-- access warning blurb for welcome page -->
+<div class='WelcomeBlock'>  
+  <P class='Blurb'>
+    You are accessing this web application on my development/test server. Because this server is also being used 
+    for development and testing of other applications, it may be brought down without warning.  Although that does 
+    tend to occur later in the day, it could also happen at other times.  Since this server may occasionally be 
+    accessible to the outside world, user login is required.  By using this server, you consent to the following 
+    conditions:</P>
+  <ul>
+    <li><P class='Blurb'>Communications occurring on this server may be monitored.</P></li>
+    <li><P class='Blurb'>At any time, data stored on this server may be inspected.</P></li>
+    <li><P class='Blurb'>Security protections may be utilized on this server.  Those protections 
+         are not provided for your benefit or privacy and may be modified at my discretion.</P></li>
+  </ul> 
+</div>  

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="2.4" xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
+      
+    <servlet>
+        <servlet-name>LoginPage</servlet-name>
+        <jsp-file>/LoginPage.jsp</jsp-file>
+    </servlet>
+    <servlet>
+        <servlet-name>LoginFailPage</servlet-name>
+        <jsp-file>/LoginFailPage.jsp</jsp-file>
+    </servlet>
+    <servlet>
+        <servlet-name>StatusPage</servlet-name>
+        <jsp-file>/StatusPage.jsp</jsp-file>
+    </servlet>
+    <servlet>
+        <servlet-name>EditPage</servlet-name>
+        <jsp-file>/EditPage.jsp</jsp-file>
+    </servlet>
+    <servlet>
+        <servlet-name>DisplayPage</servlet-name>
+        <jsp-file>/DisplayPage.jsp</jsp-file>
+    </servlet>
+    <servlet>
+        <servlet-name>SummaryPage</servlet-name>
+        <jsp-file>/SummaryPage.jsp</jsp-file>
+    </servlet>
+      
+    <servlet>
+        <servlet-name>DoTestCase</servlet-name>
+        <servlet-class>testcase.DoTestCase</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DoLogin</servlet-name>
+        <servlet-class>login.DoLogin</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DoStatus</servlet-name>
+        <servlet-class>testcase.DoStatus</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DoEdit</servlet-name>
+        <servlet-class>testcase.DoEdit</servlet-class>
+    </servlet>
+    <servlet>
+       <servlet-name>DoDisplay</servlet-name>
+       <servlet-class>testcase.DoDisplay</servlet-class>
+    </servlet>
+    
+    <servlet-mapping>
+        <servlet-name>DoTestCase</servlet-name>
+        <url-pattern>/DoTestCase</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DoLogin</servlet-name>
+        <url-pattern>/DoLogin</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DoStatus</servlet-name>
+        <url-pattern>/DoStatus</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DoEdit</servlet-name>
+        <url-pattern>/DoEdit</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DoDisplay</servlet-name>
+        <url-pattern>/DoDisplay</url-pattern>
+    </servlet-mapping>
+    
+    <session-config>
+        <session-timeout>
+            30
+        </session-timeout>
+    </session-config>
+    <welcome-file-list>
+	      <welcome-file>
+            LoginPage.jsp
+        </welcome-file>
+    </welcome-file-list>
+</web-app>

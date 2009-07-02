@@ -1,0 +1,477 @@
+/* 
+    Document   : testcase.css
+    Created on : April 16, 2008, 8:12 PM
+    Author     : lwaisanen
+*/
+
+root 
+{ 
+    display: block;
+}
+
+BODY 
+{
+   font-family: arial,helvetica,sans-serif; 
+   font-size: 10pt;
+   color: #000860;
+   height: 100%;
+   padding: 0;
+   margin: 8px;
+   background: #e0f0e0; 
+}
+
+@media screen
+{
+   div.leftband
+   {
+      position: absolute;
+      left: 0;
+      top: 0;
+      padding: 0;
+      margin: 0;
+      width: 116px;
+      height: 100%;
+      background: #e0f0e0; 
+   }
+
+   div.rightband
+   {
+      position: absolute;
+      right: 0;
+      top: 0;
+      padding: 0;
+      margin: 0;
+      width: 48px;
+      height: 100%;
+      background: #e0f0e0; 
+   }
+
+   div.centerband
+   {
+      padding: 0 0 0 0;
+      margin: 0 48px 0 116px;
+/*      height: 100%; */
+      background: #f0fff0; 
+   }
+}
+
+@media print
+{
+   div.leftband
+   {
+      display: none;
+   }
+
+   div.rightband
+   {
+      display: none;
+   }
+
+   div.centerband
+   {
+      width: 100%;
+      padding: 0;
+   }
+}
+
+label.hidden
+{
+   position: absolute;
+   left: 0px;
+   top: -500px;
+   width: 1px;
+   height: 1px;
+   overflow: hidden;
+} 
+
+div.btnlist
+{
+   padding: 0;
+   margin: 2em 0 0 1em;
+}
+img.btnimg
+{
+   margin: 1em 0 0 0;
+}
+
+div.banner
+{
+   background: #e0f0e0; 
+   height: 30px;
+}
+
+h1
+{
+   margin: 0;
+   padding: 0;
+   font-size: 14pt;
+   font-weight: bold; 
+   font-style: normal; 
+   text-align: center;
+}
+
+h2
+{
+   margin: 0;
+   font-size: 10pt;
+   font-weight: bold; 
+   font-style: normal; 
+   text-align: center;
+}
+
+p.verstxt
+{
+   float: left; 
+   margin: 0 8px 0 0;
+   padding: 0;
+   text-align: center; 
+   font-size: 8pt;
+   font-weight: normal; 
+   font-style: normal; 
+}
+
+input, select, textarea
+{
+   font-family: arial,helvetica,sans-serif; 
+   font-size: 10pt;
+}
+
+textarea.txtblock
+{
+   width: 95%;
+   height: 100px;
+   margin: 4px 16px 4px 16px;
+   padding: 0;
+}
+
+div.pickdiv
+{
+   border-width: 2px;
+   border-style: solid;
+   border-color:  #9090a0;
+   padding: 8px 8px 8px 8px; 
+   margin-bottom: 20px; 
+}
+
+table.result
+{
+   border-width: 2px;
+   border-style: solid;
+   border-color:  #9090a0;
+   border-collapse: collapse;
+   padding: 0;
+   margin: 0; 
+   width: 100%;
+}
+
+div.searchres
+{
+   margin: 8px 0px 8px 0px;
+}
+
+table.picktbl
+{
+   border-collapse: collapse;
+   width: 100%;
+}
+
+th.picktbl
+{
+   color: #000860; 
+   padding: 8px 8px 0 0;
+   text-align: right; 
+   font-weight: bold; 
+   width: 20%;
+}
+
+td.pickdata
+{
+   color: #000860; 
+   padding: 8px 8px 0 0;
+   text-align: left; 
+   font-weight: bold; 
+   width: 20%;
+}
+
+td.picktbl
+{
+   color: #000860; 
+   padding: 8px 0 0 8px;
+   text-align: left; 
+   font-weight: normal; 
+   width: 30%;
+}
+
+th.result
+{
+   border-width: 1px;
+   border-style: solid;
+   border-color:  #9090a0;
+   color: #000860; 
+   padding: 2px 8px 2px 8px;
+   text-align: center; 
+   font-weight: bold; 
+}
+
+td.result
+{
+   border-width: 1px;
+   border-style: solid;
+   border-color:  #9090a0;
+   color: #000860; 
+   padding: 2px 8px 2px 8px;
+   text-align: left; 
+   font-weight: normal; 
+}
+
+td.resultnum
+{
+   border-width: 1px;
+   border-style: solid;
+   border-color:  #9090a0;
+   color: #000860; 
+   padding: 2px 8px 2px 8px;
+   text-align: right; 
+   font-weight: normal; 
+   width: 15%;
+}
+
+td.testpass
+{
+   border-width: 1px;
+   border-style: solid;
+   border-color:  #9090a0;
+   background: #d0f0d0; 
+   color: #000860; 
+   padding: 2px 8px 2px 8px;
+   text-align: left; 
+   font-weight: normal; 
+}
+
+td.testfail
+{
+   border-width: 1px;
+   border-style: solid;
+   border-color:  #9090a0;
+   background: #f0d0d0; 
+   color: #000860; 
+   padding: 2px 8px 2px 8px;
+   text-align: left; 
+   font-weight: normal; 
+}
+
+td.testnone
+{
+   border-width: 1px;
+   border-style: solid;
+   border-color:  #9090a0;
+   background: #f0f0f0; 
+   color: #000860; 
+   padding: 2px 8px 2px 8px;
+   text-align: left; 
+   font-weight: normal; 
+}
+
+img.btnimg
+{
+   border: 0;
+   vertical-align: middle;
+}
+
+.AgreeWarnDiv 
+{
+   color: #B02006; 
+   font-weight: bold; 
+   font-size: small;
+   border-width: 2px;
+   border-style: solid;
+   border-color:  #B02006;
+}
+
+.BlbHead {color: #555577; font-weight: bold; font-size: small}
+
+div.details
+{
+   margin: 0 0 0 0;
+   padding: 0 0 0 0;
+   border-width: 2px;
+   border-style: solid;
+   border-color:  #9090a0;
+}
+
+
+dl.details
+{
+   padding: 2px 8px 2px 8px; 
+   margin: 0 0 0 0;
+}
+
+dt.details
+{
+   color: #000860; 
+   font-weight: bold; 
+   font-size: small;
+   margin: 1em 0 0 0;
+}
+
+dd.details
+{
+   color: #000860; 
+   font-weight: normal; 
+   font-size: small;
+   margin: 8px 0 0 2em;
+}
+
+dl.factdesc
+{
+   padding: 2px 8px 2px 8px;
+}
+
+p.factlabel
+{
+   color: #000860; 
+   font-weight: bold; 
+   font-size: small;
+/*   margin: 1em 0 0 0; */
+}
+
+p.pwexpire
+{
+   color: #006008; 
+   font-weight: bold; 
+   font-size: small;
+}
+
+p.facttext
+{
+   color: #000860; 
+   font-weight: normal; 
+   font-size: small;
+/*   margin: 8px 0 0 2em; */
+}
+
+table.factors
+{
+   border-collapse: collapse;
+}
+
+th.factors
+{
+   border-width: 1px;
+   border-style: solid;
+   border-color:  #9090a0;
+   color: #000860; 
+   padding: 2px 8px 2px 8px;
+   text-align: center; 
+   font-weight: bold; 
+}
+
+td.factors
+{
+   border-width: 1px;
+   border-style: solid;
+   border-color:  #9090a0;
+   color: #000860; 
+   padding: 2px 8px 2px 8px;
+   text-align: center; 
+   font-weight: normal; 
+}
+
+td.edits
+{
+   border-width: 1px;
+   border-style: solid;
+   border-color:  #9090a0;
+   color: #000860; 
+   padding: 0 0 0 0;
+   text-align: center; 
+   font-weight: normal; 
+}
+
+th.subblock
+{
+   border-width: 1px;
+   border-style: solid;
+   border-color:  #9090a0;
+   color: #000860; 
+   padding: 2px 8px 2px 8px;
+   text-align: right; 
+   font-weight: bold; 
+}
+
+td.subblock
+{
+   border-width: 1px;
+   border-style: solid;
+   border-color:  #9090a0;
+   color: #000860; 
+   padding: 2px 8px 2px 8px;
+   text-align: left; 
+   font-weight: normal; 
+}
+
+th.logrowhead
+{
+   color: #000860; 
+   padding-right: 8px;
+   text-align: right; 
+   font-weight: bold; 
+}
+
+th.logcolhead
+{
+   color: #000860; 
+   text-align: left; 
+   font-weight: bold; 
+}
+
+li
+{
+   margin:  8px 0 0 0;
+}
+
+dt.workhist
+{
+   color: #000860; 
+   font-weight: bold; 
+   font-size: small;
+   margin: 1em 0 0 0;
+}
+
+dd.workhist
+{
+   color: #000860; 
+   font-weight: normal; 
+   font-size: small;
+   margin: 1em 0 0 0;
+}
+
+p.ResName
+{
+   margin: 1em 0 0 0;
+   padding: 0;
+   font-size: 14pt;
+   font-weight: bold; 
+   font-style: normal; 
+   text-align: left;
+}
+
+p.ResSectHead
+{
+   margin: 1em 0 0 0;
+   padding: 0;
+   font-size: 12pt;
+   font-weight: bold; 
+   font-style: normal; 
+   text-align: left;
+}
+
+p.ResSectDetail
+{
+   margin: 0 0 0 1em;
+   padding: 0;
+   font-size: small;
+   font-weight: normal; 
+   font-style: normal; 
+   text-align: left;
+}
