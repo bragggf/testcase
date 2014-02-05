@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="2.4" xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
-      
     <servlet>
         <servlet-name>LoginPage</servlet-name>
         <jsp-file>/LoginPage.jsp</jsp-file>
@@ -8,6 +7,10 @@
     <servlet>
         <servlet-name>LoginFailPage</servlet-name>
         <jsp-file>/LoginFailPage.jsp</jsp-file>
+    </servlet>
+    <servlet>
+        <servlet-name>SetpwPage</servlet-name>
+        <jsp-file>/SetpwPage.jsp</jsp-file>
     </servlet>
     <servlet>
         <servlet-name>StatusPage</servlet-name>
@@ -25,7 +28,10 @@
         <servlet-name>SummaryPage</servlet-name>
         <jsp-file>/SummaryPage.jsp</jsp-file>
     </servlet>
-      
+    <servlet>
+        <servlet-name>ImportPage</servlet-name>
+        <jsp-file>/ImportPage.jsp</jsp-file>
+    </servlet>
     <servlet>
         <servlet-name>DoTestCase</servlet-name>
         <servlet-class>testcase.DoTestCase</servlet-class>
@@ -33,6 +39,10 @@
     <servlet>
         <servlet-name>DoLogin</servlet-name>
         <servlet-class>login.DoLogin</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DoSetpw</servlet-name>
+        <servlet-class>login.DoSetpw</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>DoStatus</servlet-name>
@@ -43,10 +53,13 @@
         <servlet-class>testcase.DoEdit</servlet-class>
     </servlet>
     <servlet>
-       <servlet-name>DoDisplay</servlet-name>
-       <servlet-class>testcase.DoDisplay</servlet-class>
+        <servlet-name>DoDisplay</servlet-name>
+        <servlet-class>testcase.DoDisplay</servlet-class>
     </servlet>
-    
+    <servlet>
+        <servlet-name>DoImport</servlet-name>
+        <servlet-class>testcase.DoImport</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>DoTestCase</servlet-name>
         <url-pattern>/DoTestCase</url-pattern>
@@ -54,6 +67,10 @@
     <servlet-mapping>
         <servlet-name>DoLogin</servlet-name>
         <url-pattern>/DoLogin</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DoSetpw</servlet-name>
+        <url-pattern>/DoSetpw</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>DoStatus</servlet-name>
@@ -67,14 +84,17 @@
         <servlet-name>DoDisplay</servlet-name>
         <url-pattern>/DoDisplay</url-pattern>
     </servlet-mapping>
-    
+    <servlet-mapping>
+        <servlet-name>DoImport</servlet-name>
+        <url-pattern>/DoImport</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30
         </session-timeout>
     </session-config>
     <welcome-file-list>
-	      <welcome-file>
+        <welcome-file>
             LoginPage.jsp
         </welcome-file>
     </welcome-file-list>

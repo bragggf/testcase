@@ -1,4 +1,4 @@
-// page locking 
+// page locking
 var isLocked = 1;
 
 // cache button images
@@ -63,9 +63,45 @@ CalcUp.src = 'images/CalcUp.gif';
 CalcDn = new Image(72,32);
 CalcDn.src = 'images/CalcDn.gif';
 
+SummaryUp = new Image(72,32);
+SummaryUp.src = 'images/SummaryUp.gif';
+SummaryDn = new Image(72,32);
+SummaryDn.src = 'images/SummaryDn.gif';
+
+ImportUp = new Image(72,32);
+ImportUp.src = 'images/ImportUp.gif';
+ImportDn = new Image(72,32);
+ImportDn.src = 'images/ImportDn.gif';
+
+ExportUp = new Image(72,32);
+ExportUp.src = 'images/ExportUp.gif';
+ExportDn = new Image(72,32);
+ExportDn.src = 'images/ExportDn.gif';
+
+
 function unlockPage()
 {
    isLocked = 0;
+}
+
+function DoLogin()
+{
+   var userobj = document.getElementById('UserId');
+   var passobj = document.getElementById('PassWd');
+   var userid = userobj.value;
+   var passwd = passobj.value;
+
+   if ((userid == null) || (passwd == null))
+   {
+      alert("Enter your UserId and Password.");
+      return;
+   }
+
+   frm = document.getElementById('NavForm');
+   frm.ReqAct.value = "DoLogin";
+   frm.BtnAct.value = "DoLogin";
+   frm.target = "_self";
+   frm.submit();
 }
 
 function SwapBtn(x, y)
@@ -76,11 +112,11 @@ function SwapBtn(x, y)
 
 function DoSubmit(aform, abtn)
 {
-   if (isLocked == 0) 
-   {
+   if (isLocked == 0)
+   {   
       isLocked = 1;
       frm = document.getElementById(aform);
-      frm.BtnAct.value = abtn;   
+      frm.BtnAct.value = abtn;
       frm.target = "_self";
       frm.submit();
    }
@@ -88,7 +124,7 @@ function DoSubmit(aform, abtn)
    {
       alert("You have to let selected operations complete.  Otherwise, you may make your session status unstable.");
       isLocked = 0;
-   } 
+   }
 }
 
 function DoDetails(aform, abtn, adet)
@@ -103,28 +139,28 @@ function DoConfirm(aform, abtn)
 {
    if (confirm("Are you sure you want to " + abtn + " this item?"))
    {
-      DoSubmit(aform, abtn);	
-   }    
+      DoSubmit(aform, abtn);
+   }
 }
 
 function ShowItem(aid)
 {
-   var mynode = document.getElementById(aid); 
-   
+   var mynode = document.getElementById(aid);
+
    if (mynode.style.display=="none")
       mynode.style.display = "block";
    else
-      mynode.style.display = "none";	
-}   
+      mynode.style.display = "none";
+}
 
 function HideItem(aid)
 {
-   var mynode = document.getElementById(aid); 
-   mynode.style.display = "none";	
-}   
+   var mynode = document.getElementById(aid);
+   mynode.style.display = "none";
+}
 
 function EnforceMaxLen(aobj, alen)
 {
-   if (aobj.value.length > alen) 
+   if (aobj.value.length > alen)
       aobj.value = aobj.value.substring(0, alen)
 }

@@ -7,17 +7,31 @@
 <%@ page import="
 testcase.*,
 manapp.*,
+dbconn.*,
 java.sql.*,
 java.util.Date,
 java.text.SimpleDateFormat
 " %>
-  <title><%=CConsts.WebAppTitle%></title>
+  <title><%=CAppConsts.WebAppTitle%></title>
   <LINK REL='StyleSheet' HREF='testcase.css' TYPE='text/css' MEDIA='screen,print'>
   <script type="text/javascript" SRC="javascript/buttons.js"></script>
 </head>
 <body onload='javascript:unlockPage()'>
+<div class='topband'>
+  <div class='logodiv'>
+    <IMG src='<%=CAppConsts.WebAppLogo%>' alt='<%=CAppConsts.WebAppLogoAlt%>' TITLE='<%=CAppConsts.WebAppLogoTitle%>'>
+  </div>
+  <div class='versdiv'>
+    <p class='verstxt'><%=CAppConsts.WebAppAbbr + " " + CAppConsts.WebAppVersion%></p>
+  </div>
+  <div class='banner'>
+    <h1><%=CAppConsts.WebAppTitle%></h1>  
+  </div>
+</div>  
+
+   
+   
 <div class='leftband'>
-  <IMG src='images/AltarumLogo.png' alt='<%=CConsts.WebAppLogoAlt%>' TITLE='<%=CConsts.WebAppLogoTitle%>'>
   <div class='btnlist'>
     <A OnMouseDown='javascript:SwapBtn("Return","ReturnDn")' 
        OnMouseUp='javascript:SwapBtn("Return","ReturnUp")'
@@ -26,33 +40,22 @@ java.text.SimpleDateFormat
             src='images/ReturnUp.gif'></A>
   </div>
 </div>
+  
 <div class='rightband'>
-  <p class='verstxt'><%=CConsts.WebAppAbbr + " " + CConsts.WebAppVersion%></p>
 </div>
-<form name='DisplayForm' id='DisplayForm' action='<%=CConsts.JspLinkCentral%>' method=post>
+  
 <div class='centerband'>
+  <form name='DisplayForm' id='DisplayForm' action='<%=CAppConsts.JspLinkCentral%>' method=post>
+  <div class='tablediv'>
   <input type='hidden' name='ReqAct' id='ReqAct' value='DoDisplay'>
   <input type='hidden' name='BtnAct' id='BtnAct' value='error'>
   <input type='hidden' name='DetAct' id='DetAct' value='error'>
-  <div class='banner'>
-    <h1><%=CConsts.WebAppTitle%></h1>  
-  </div>
 <% 
-   manapp.CAppProps props = (manapp.CAppProps) session.getAttribute("AppProps");
-   if (props == null) 
-   {
-      props = new manapp.CAppProps(CConsts.AppPropFile);
-      session.setAttribute("AppProps", props);
-   }
+   ServletContext scontext = this.getServletContext();
+   CDbConnMan dbconnman = (CDbConnMan) scontext.getAttribute("DbConnMan");   
 
-   manapp.CDbConnect dbconn = (manapp.CDbConnect) session.getAttribute("DbConn");
-   if (dbconn == null) 
-   {
-      dbconn = new manapp.CDbConnect(props.DbConfigFile, props.ErrorLogFile, props.ErrMsgEcho);
-      session.setAttribute("DbConn", dbconn);
-   }
-
-   CCodeDesc testgroups = new CCodeDesc(dbconn.getConnection(), "TestGroupTbl", "TestGroupId", "TestGroupNm", "TestGroupSrt");
+   Connection conn = dbconnman.getConnection(); 
+   CCodeDesc testgroups = new CCodeDesc(conn, "TestGroupTbl", "TestGroupId", "TestGroupNm", "TestGroupSrt");
    
    java.text.DecimalFormat percfmt = new java.text.DecimalFormat("##0%");
 
@@ -77,10 +80,10 @@ java.text.SimpleDateFormat
       String grpcode = testgroups.getCode(igrp);
       String grpname = testgroups.getDesc(igrp);
       CTestList testlist = new CTestList();
-      testlist.dbReadList(dbconn.getConnection(), grpcode);
+      testlist.dbReadList(conn, grpcode,CAppConsts.DefaultForecaster,"");
 
-      int passcnt = testlist.getStatusCnt(CConsts.StatusPass);
-      int failcnt = testlist.getStatusCnt(CConsts.StatusFail);
+      int passcnt = testlist.getStatusCnt(CAppConsts.StatusPass);
+      int failcnt = testlist.getStatusCnt(CAppConsts.StatusFail);
       int casecnt = testlist.getCount();
       int nonecnt = casecnt - passcnt - failcnt;
 
@@ -109,6 +112,8 @@ java.text.SimpleDateFormat
     </tr>
 <% 
    }
+   
+   dbconnman.returnConnection(conn);
    String tpassper = "--";
    String tfailper = "--";
    String tnoneper = "--";
@@ -128,7 +133,8 @@ java.text.SimpleDateFormat
       <td class='resultnum'><%=tnoneper%></td>
     </tr>
   </table>
+  </div> 
+  </form>
 </div> 
-</form>
 </body>
 </html>

@@ -22,15 +22,40 @@ BODY
 
 @media screen
 {
-   div.leftband
+   div.topband
    {
       position: absolute;
       left: 0;
       top: 0;
       padding: 0;
       margin: 0;
+      width: 100%;
+      height: 60px;
+      background: #e0f0e0;
+   }
+   div.logodiv
+   {
+      position: absolute;
+      left: 0;
+      top: 0;
+      padding: 0;
+      margin: 0;
+   }
+   div.versdiv
+   {
+      padding: 0;
+      margin: 0;
+      float: right;
+      width: 10%;
+   }
+   div.leftband
+   {
+      position: absolute;
+      left: 0;
+      top: 60px;
+      padding: 0;
+      margin: 0;
       width: 116px;
-      height: 100%;
       background: #e0f0e0; 
    }
 
@@ -38,19 +63,21 @@ BODY
    {
       position: absolute;
       right: 0;
-      top: 0;
+      top: 60px;
       padding: 0;
       margin: 0;
       width: 48px;
-      height: 100%;
       background: #e0f0e0; 
    }
 
    div.centerband
    {
+      position: absolute;
+      top: 60px;
+      left: 116px;
+      right: 48px;
       padding: 0 0 0 0;
-      margin: 0 48px 0 116px;
-/*      height: 100%; */
+      margin: 0 0 0 0;
       background: #f0fff0; 
    }
 }
@@ -150,7 +177,14 @@ div.pickdiv
    border-style: solid;
    border-color:  #9090a0;
    padding: 8px 8px 8px 8px; 
-   margin-bottom: 20px; 
+}
+
+div.tablediv
+{
+   border-width: 2px;
+   border-style: solid;
+   border-color:  #9090a0;
+   padding: 0 0 0 0; 
 }
 
 table.result
@@ -158,6 +192,15 @@ table.result
    border-width: 2px;
    border-style: solid;
    border-color:  #9090a0;
+   border-collapse: collapse;
+   padding: 0;
+   margin: 0; 
+   width: 100%;
+}
+
+table.midtitle
+{  border-bottom: 2px solid #DEDEDE;
+   border-top: 2px solid #DEDEDE;
    border-collapse: collapse;
    padding: 0;
    margin: 0; 
@@ -271,6 +314,16 @@ td.testnone
    text-align: left; 
    font-weight: normal; 
 }
+td.subtitle
+{
+   color: #808080; 
+   padding: 2px 8px 2px 8px;
+   text-align: center; 
+   font-weight: bold; 
+   border-bottom-style: solid;
+   border-bottom-color: #003300;   
+   border-bottom-width: 2px;
+}
 
 img.btnimg
 {
@@ -372,7 +425,7 @@ td.factors
    border-style: solid;
    border-color:  #9090a0;
    color: #000860; 
-   padding: 2px 8px 2px 8px;
+   padding: 2px 2px 2px 2px;
    text-align: center; 
    font-weight: normal; 
 }
@@ -474,4 +527,470 @@ p.ResSectDetail
    font-weight: normal; 
    font-style: normal; 
    text-align: left;
+}
+.button
+{        
+	display: inline-block;
+	white-space: nowrap;
+	background-color: #ccc;
+	background-image: -webkit-gradient(linear, left top, left bottom, from(#eee), to(#ccc));
+	background-image: -webkit-linear-gradient(top, #eee, #ccc);
+	background-image: -moz-linear-gradient(top, #eee, #ccc);
+	background-image: -ms-linear-gradient(top, #eee, #ccc);
+	background-image: -o-linear-gradient(top, #eee, #ccc);
+	background-image: linear-gradient(top, #eee, #ccc);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#eeeeee', EndColorStr='#cccccc');
+	border: 1px solid #777;
+	padding: 0 1.5em;
+	margin: 0.5em;
+	font: bold 1em/2em Arial, Helvetica;
+	text-decoration: none;
+	color: #333;
+	text-shadow: 0 1px 0 rgba(255,255,255,.8);
+	-moz-border-radius: .2em;
+	-webkit-border-radius: .2em;
+	border-radius: .2em;
+	-moz-box-shadow: 0 0 1px 1px rgba(255,255,255,.8) inset, 0 1px 0 rgba(0,0,0,.3);
+	-webkit-box-shadow: 0 0 1px 1px rgba(255,255,255,.8) inset, 0 1px 0 rgba(0,0,0,.3);
+	box-shadow: 0 0 1px 1px rgba(255,255,255,.8) inset, 0 1px 0 rgba(0,0,0,.3);
+}
+
+.button:hover
+{
+	background-color: #ddd;        
+	background-image: -webkit-gradient(linear, left top, left bottom, from(#fafafa), to(#ddd));
+	background-image: -webkit-linear-gradient(top, #fafafa, #ddd);
+	background-image: -moz-linear-gradient(top, #fafafa, #ddd);
+	background-image: -ms-linear-gradient(top, #fafafa, #ddd);
+	background-image: -o-linear-gradient(top, #fafafa, #ddd);
+	background-image: linear-gradient(top, #fafafa, #ddd);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#fafafa', EndColorStr='#dddddd');        
+}
+
+.button:active
+{
+	-moz-box-shadow: 0 0 4px 2px rgba(0,0,0,.3) inset;
+	-webkit-box-shadow: 0 0 4px 2px rgba(0,0,0,.3) inset;
+	box-shadow: 0 0 4px 2px rgba(0,0,0,.3) inset;
+	position: relative;
+	top: 1px;
+}
+
+.button:focus
+{
+	outline: 0;
+	background: #fafafa;
+}    
+
+.button:before
+{
+	background: #ccc;
+	background: rgba(0,0,0,.1);
+	float: left;        
+	width: 1em;
+	text-align: center;
+	font-size: 1.5em;
+	margin: 0 1em 0 -1em;
+	padding: 0 .2em;
+	-moz-box-shadow: 1px 0 0 rgba(0,0,0,.5), 2px 0 0 rgba(255,255,255,.5);
+	-webkit-box-shadow: 1px 0 0 rgba(0,0,0,.5), 2px 0 0 rgba(255,255,255,.5);
+	box-shadow: 1px 0 0 rgba(0,0,0,.5), 2px 0 0 rgba(255,255,255,.5);
+	-moz-border-radius: .15em 0 0 .15em;
+	-webkit-border-radius: .15em 0 0 .15em;
+	border-radius: .15em 0 0 .15em;
+        pointer-events: none;        
+}
+
+/* Hexadecimal entities for the icons */
+
+.add:before
+{
+	content: "\271A";
+}
+
+.edit:before
+{
+	content: "\270E";        
+}
+
+.delete:before
+{
+	content: "\2718";        
+}
+
+.save:before
+{
+	content: "\2714";        
+}
+
+.email:before
+{
+	content: "\2709";        
+}
+
+.like:before
+{
+	content: "\2764";        
+}
+
+.next:before
+{
+	content: "\279C";
+}
+
+.star:before
+{
+	content: "\2605";
+}
+
+.spark:before
+{
+	content: "\2737";
+}
+
+.play:before
+{
+	content: "\25B6";
+} 
+
+table.data
+{
+  font-size: 8pt;
+  font-family: Arial, Verdana, Tahoma, sans-serif;
+  width: 100%;
+}
+
+td.legend, th.legend
+{
+  color: #FFFFFF;
+  background-color: #6699CC;
+  vertical-align: top;
+  padding: 5px;
+}
+
+
+table.data thead
+{
+  color: #FFFFFF;
+  background-color: #6699CC;
+  vertical-align: top;
+  padding: 5px;
+  font-family : Arial,Helvetica,Sans-Serif;
+  font-size: 8pt;
+}
+
+
+th.smallheading
+{
+  color: #FFFFFF;
+  background-color: #6699CC;
+  vertical-align: top;
+  padding: 5px;
+  font-family : Arial,Helvetica,Sans-Serif;
+  font-size: 7pt;
+}
+td.titlelight
+{
+  font-family: Arial, Verdana, Tahoma, sans-serif;
+  font-size: 11pt;
+  color: #000860;
+  vertical-align: top;
+  padding: 8px 8px 0 0;
+  font-weight: 500;
+  text-align: right;
+  background-color: #aad4aa;
+}
+
+td.title
+{
+  font-family: Arial, Verdana, Tahoma, sans-serif;
+  font-size: 11pt;
+  color: #000860;
+  
+  vertical-align: top;
+  padding: 8px 8px 0 0;
+  font-weight: bold;
+  text-align: right;
+  background-color: #aad4aa;
+}
+
+td.titleinfo
+{
+  font-family: Arial, Verdana, Tahoma, sans-serif;
+  font-size: 12pt;
+  color: #000860;
+  vertical-align: top;
+  padding: 8px 8px 0 0;
+  font-weight: 500;
+  text-align: left;
+  background-color: #aad4aa;
+}
+
+td.midtitleleft
+{
+  font-family: Arial, Verdana, Tahoma, sans-serif;
+  font-size: 10pt;
+  color: #BEBEBE; 
+  vertical-align: top;
+  padding: 4px 4px 0 0;
+  font-weight: bold;
+  text-align: left;
+ 
+}
+
+td.titleleft
+{
+  font-family: Arial, Verdana, Tahoma, sans-serif;
+  font-size: 12pt;
+  color: #000860;
+  vertical-align: top;
+  padding: 8px 8px 0 0;
+  font-weight: bold;
+  text-align: left;
+  background-color: #B2D8B2;
+}
+
+td.restitleleft
+{
+  font-family: Arial, Verdana, Tahoma, sans-serif;
+  font-size: 12pt;
+  color: #000860;
+  
+  vertical-align: top;
+  padding: 8px 8px 0 0;
+  font-weight: bold;
+  text-align: left;
+  background-color: #B2D1F0;
+}
+
+td.detailtitle
+{
+  font-family: Arial, Verdana, Tahoma, sans-serif;
+  font-size: 14pt;
+  background-color: #6699CC;
+  vertical-align: top;
+  padding: 5px;
+  font-weight: bold;
+}
+
+td.lockedtitle
+{
+  font-family: Arial, Verdana, Tahoma, sans-serif;
+  color: #FFFFFF;
+  background-color: #6699CC;
+  vertical-align: top;
+  font-weight: bold;
+  padding: 5px;
+  font-size: 10pt;
+}
+
+td.requiredtitle
+{
+  font-family: Arial, Verdana, Tahoma, sans-serif;
+  font-size: 8pt;
+  color: #FF0000;
+  background-color: #6699CC;
+  vertical-align: top;
+  padding: 5px;
+  font-weight: bold;
+}
+
+td.titlenopad
+{
+  font-family: Arial, Verdana, Tahoma, sans-serif;
+  font-size: 8pt;
+  color: #FFFFFF;
+  background-color: #6699CC;
+  vertical-align: top;
+  padding: 0px;
+  font-weight: bold;
+}
+
+td.printtitle
+{
+  font-family: Arial, Verdana, Tahoma, sans-serif;
+  color: #FFFFFF;
+  background-color: #666666;
+  vertical-align: top;
+  padding: 5px;
+  font-weight: bold;
+  font-size: 10pt;
+}
+
+td.label {
+  font-family: Arial, Verdana, Tahoma, sans-serif;
+  font-size: 8pt;
+  color: #000000;
+  background-color: #C0C0C0;
+}
+
+td.labelnopad
+{
+  font-family: Arial, Verdana, Tahoma, sans-serif;
+  font-size: 8pt;
+  color: #000000;
+  background-color: #C0C0C0;
+  padding: 0px;
+  vertical-align: top;
+}
+
+td.requiredlabel {
+  font-family: Arial, Verdana, Tahoma, sans-serif;
+  font-size: 8pt;
+  color: #FF0000;
+  background-color: #C0C0C0;
+}
+
+td.labelbold {
+  font-family: Arial, Verdana, Tahoma, sans-serif;
+  font-size: 8pt;
+  color: #000000;
+  background-color: #C0C0C0;
+  font-weight: bold;
+}
+
+td.label a {
+  color: #0000FF;
+  background-color: inherit;
+  text-decoration: none;
+}
+
+td.label-mouseover {
+  color: #FFFFFF;
+  background-color: #000099;
+}
+
+td.label-mouseover a {
+  color: #FFFFFF;
+  background-color: inherit;
+  text-decoration: none;
+}
+
+td.field {
+  font-family: Arial, Verdana, Tahoma, sans-serif;
+  font-size: 10pt;
+  color: #000000;
+  
+}
+td.fldlabel {
+  font-family: Arial, Verdana, Tahoma, sans-serif;
+  font-size: 10pt;
+  color: #000000;
+  font-weight: bold;
+  text-align: right;
+}
+td.fldlabelleft {
+  font-family: Arial, Verdana, Tahoma, sans-serif;
+  font-size: 10pt;
+  color: #000000;
+  font-weight: bold;
+  text-align: left;
+}
+td.detailfield {
+  font-family: Arial, Verdana, Tahoma, sans-serif;
+  font-size: 8pt;
+  color: #000000;
+  background-color: #EEEEEE;
+}
+
+td.fieldaligntop {
+  font-family: Arial, Verdana, Tahoma, sans-serif;
+  font-size: 8pt;
+  color: #000000;
+  background-color: #EEEEEE;
+  Vertical-Align: top;
+}
+
+td.labelaligntop {
+  color: #000000;
+  background-color: #C0C0C0;
+  Vertical-Align: top;
+}
+
+
+td.requiredfield {
+  font-family: Arial, Verdana, Tahoma, sans-serif;
+  font-size: 8pt;
+  color: #FF0000;
+  background-color: #EEEEEE;
+}
+
+td.printfieldlabel {
+  font-family: Arial, Verdana, Tahoma, sans-serif;
+  font-size: 8pt;
+  color: #000000;
+  background-color: #EEEEEE;
+  font-weight: bold;
+  font-style: italic;
+}
+
+td.fieldcenter {
+  font-family: Arial, Verdana, Tahoma, sans-serif;
+  font-size: 8pt;
+  color: #000000;
+  background-color: #EEEEEE;
+  text-align: center;
+}
+
+.textareastylegray
+{
+  color: #000000;
+  background-color: #EEEEEE;
+  font-family: Arial, sans-serif;
+  font-size: 10pt;
+  font-style: Arial, sans-serif;
+}
+
+.textareastylewhite
+{
+  color: #000000;
+  background-color: #FFFFFF;
+  font-family: Arial, sans-serif;
+  font-size: 10pt;
+  font-style: Arial, sans-serif;
+}
+
+
+.disabledfield {
+  color: #666666;
+  background-color: #DDDDDD;
+}
+
+.buttonrow {
+  color: #000000;
+  background-color: #6699CC;
+}
+
+td.field a {
+  font-family: Arial, Verdana, Tahoma, sans-serif;
+  font-size: 8pt;
+  color: #0000FF;
+  background-color: inherit;
+}
+
+td.error {
+  color: #CC3333;
+  background-color: inherit;
+}
+
+td.required {
+  font-family: Arial, Verdana, Tahoma, sans-serif;
+  font-size: 8pt;
+  color: #CC3333;
+  background-color: inherit;
+  font-weight: bold;
+}
+
+table.data td.base {
+  background-color: #6699CC;
+  height: 1px;
+}
+
+p.error {
+  color: #FF0000;
+}
+
+p.closing {
+  text-align: center;
+  font-weight: bold;
 }

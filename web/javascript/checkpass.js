@@ -1,3 +1,16 @@
+
+function getTextValue(atxtid)
+{
+   var txtobj = document.getElementById(atxtid);
+   if (txtobj == null) return("");
+   return(txtobj.value);
+}
+
+function setTextValue(atxtid, aval)
+{
+   var txtobj = document.getElementById(atxtid);
+   if (txtobj != null) txtobj.value = aval;
+}
   
 function CheckLower(apass)
 {
@@ -54,7 +67,7 @@ function CheckSpecial(apass)
    while (idx < apass.length)
    {
       var curchr = apass.charAt(idx);
-      if (curchr.search(/[~`!@#$%\^&\*\(\)_=\-+\[\]\{\}\|\\:;"'<,>\.\?\/]/) != -1)
+      if (curchr.search(/[\x21-\x2f\x3a-\x40\x5b-\x60\x7b-\x7e]/) != -1)
       {
          cnt = cnt + 1;
       }
@@ -66,11 +79,10 @@ function CheckSpecial(apass)
 function CheckDiff(apass, bpass)
 {
    var mat = 0;
-   for (idx = 0; idx < apass.length; idx++)
+   for (var idx = 0; idx < apass.length; idx++)
    {
       var achr = apass.charAt(idx);
-      var fnd = 0;
-      for (jdx = 0; jdx < bpass.length; jdx++)
+      for (var jdx = 0; jdx < bpass.length; jdx++)
       {
          bchr = bpass.charAt(jdx);
          if (achr == bchr) 
@@ -83,83 +95,87 @@ function CheckDiff(apass, bpass)
    return(apass.length - mat);
 }
 
-function DoSetPw(aform, abtn)
+function DoSetPw(abtn, aminlen, aminlc, aminuc, amindig, aminsp, aminnew)
 {
-   frm = document.getElementById(aform);
+   var myoldpass = getTextValue('OldPass'); 
+   var mynewpass = getTextValue('NewPass'); 
+   var myconfpass = getTextValue('ConfPass'); 
+	
+	frm = document.getElementById('NavForm');
 
    // is the form filled out
-   if ((frm.OldPass.value == "") || (frm.NewPass.value == "") || (frm.ConfPass.value == ""))
+   if ((myoldpass == "") || (mynewpass == "") || (myconfpass == ""))
    { 
       alert("You must enter your current password, a new password, and confirm the new password.");
       return;
    }
 
    // has the pssword been changed
-   if (frm.OldPass.valuevalue == frm.NewPass.value)
+   if (myoldpass == mynewpass)
    {
       alert("You cannot reuse your current password.");
-      frm.NewPass.value = "";
-      frm.ConfPass.value = "";
+      setTextValue("NewPass", "");
+      setTextValue("ConfPass", "");
       return;
    }
 
    // has the password been confirmed
-   if (frm.NewPass.value != frm.ConfPass.value)
+   if (mynewpass != myconfpass)
    {
       alert("You have not confirmed your new password.");
       return;
    }
 
    // minimum length
-   if (frm.NewPass.value.length < 8)
+   if (mynewpass.length < aminlen)
    {
-      alert("Your new password must be at least eight characters.");
+      alert("Your new password needs to be longer.");
       return;
    }
    
-   var numtyp = CheckLower(frm.NewPass.value);
+   var numtyp = CheckLower(mynewpass);
    var tottyp = numtyp;
-   if (numtyp < 2)
+   if (numtyp < aminlc)
    {
-      alert("Your new password must use at least two lowercase characters.");
+      alert("Your new password needs more lowercase characters.");
       return;
    }
 
-   numtyp = CheckUpper(frm.NewPass.value);
+   numtyp = CheckUpper(mynewpass);
    tottyp = tottyp + numtyp;
-   if (numtyp < 2)
+   if (numtyp < aminuc)
    {
-      alert("Your new password must use at least two uppercase characters.");
+      alert("Your new password needs more uppercase characters.");
       return;
    }
 
-   numtyp = CheckDigit(frm.NewPass.value);
+   numtyp = CheckDigit(mynewpass);
    tottyp = tottyp + numtyp;
-   if (numtyp < 2)
+   if (numtyp < amindig)
    {
-      alert("Your new password must use at least two digit characters.");
+      alert("Your new password needs more digit characters.");
       return;
    }
 
-   numtyp = CheckSpecial(frm.NewPass.value);
+   numtyp = CheckSpecial(mynewpass);
    tottyp = tottyp + numtyp;
-   if (numtyp < 2)
+   if (numtyp < aminsp)
    {
-      alert("Your new password must use at least two special characters.");
+      alert("Your new password needs more special characters.");
       return;
    }
 
-   if (tottyp != frm.NewPass.value.length)
+   if (tottyp != mynewpass.length)
    {
       alert("Your new password contains disallowed characters.");
       return;
    }
 
-   if (CheckDiff(frm.NewPass.value, frm.OldPass.value) < 2)
+   if (CheckDiff(mynewpass, myoldpass) < aminnew)
    {
-      alert("Your new password must contain at least two characters that were not used in you old password.");
+      alert("Your new password needs more characters that were not used in you old password.");
       return;
    }
 
-   DoSubmit(aform, abtn);	
+   DoButton(abtn);	
 }

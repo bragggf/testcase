@@ -8,11 +8,12 @@
 testcase.*,
 login.*,
 manapp.*,
+dbconn.*,
 java.sql.*,
 java.util.Date,
 java.text.SimpleDateFormat
 " %>
-  <title><%=CConsts.WebAppTitle%></title>
+  <title><%=CAppConsts.WebAppTitle%></title>
   <LINK REL='StyleSheet' HREF='testcase.css' TYPE='text/css' MEDIA='screen,print'>
   <script type="text/javascript" SRC="javascript/WRecSet.js"></script>
   <script type="text/javascript" SRC="javascript/selfuns.js"></script>
@@ -21,63 +22,67 @@ java.text.SimpleDateFormat
 </head>
 
 <body onload='javascript:unlockPage()'>
+<div class='topband'>
+  <div class='logodiv'>
+    <IMG src='<%=CAppConsts.WebAppLogo%>' alt='<%=CAppConsts.WebAppLogoAlt%>' TITLE='<%=CAppConsts.WebAppLogoTitle%>'>
+  </div>
+  <div class='versdiv'>
+    <p class='verstxt'><%=CAppConsts.WebAppAbbr + " " + CAppConsts.WebAppVersion%></p>
+  </div>
+  <div class='banner'>
+    <h1><%=CAppConsts.WebAppTitle%></h1>  
+  </div>
+</div>  
+   
 <div class='leftband'>
-<IMG src='images/AltarumLogo.png' alt='<%=CConsts.WebAppLogoAlt%>' TITLE='<%=CConsts.WebAppLogoTitle%>'>
-<div class='btnlist'>
-<A OnMouseDown='javascript:SwapBtn("Return","ReturnDn")' 
+  <div class='btnlist'>
+    <A OnMouseDown='javascript:SwapBtn("Return","ReturnDn")' 
                OnMouseUp='javascript:SwapBtn("Return","ReturnUp")'
                HREF='javascript:DoSubmit("DisplayForm","Cancel")'>
                <IMG class='btnimg' name='Return' ID='Return' alt='Return button' 
                     src='images/ReturnUp.gif'></A>
-</div>
+  </div>
 </div>
 <div class='rightband'>
-  <p class='verstxt'><%=CConsts.WebAppAbbr + " " + CConsts.WebAppVersion%></p>
 </div>
-<form name='DisplayForm' id='DisplayForm' action='<%=CConsts.JspLinkCentral%>' method=post>
+  
 <div class='centerband'>
-  <div class='banner'>
-    <h1><%=CConsts.WebAppTitle%></h1>  
-  </div>
-<% 
-   CUserItem myuser = (CUserItem) session.getAttribute("UserItem");
-
-   manapp.CAppProps props = (manapp.CAppProps) session.getAttribute("AppProps");
-   if (props == null) 
-   {
-      props = new manapp.CAppProps(CConsts.AppPropFile);
-      session.setAttribute("AppProps", props);
-   }
-
-   manapp.CDbConnect dbconn = (manapp.CDbConnect) session.getAttribute("DbConn");
-   if (dbconn == null) 
-   {
-      dbconn = new manapp.CDbConnect(props.DbConfigFile, props.ErrorLogFile, props.ErrMsgEcho);
-      session.setAttribute("DbConn", dbconn);
-   }
-
-   String mytestgrp = (String) session.getAttribute("CurTestGroup");
-   if (mytestgrp == null) mytestgrp = CConsts.TagNoValue;
-
-   CCodeDesc testgroups = new CCodeDesc(dbconn.getConnection(), "TestGroupTbl", "TestGroupId", "TestGroupNm", "TestGroupSrt");
-
-   CTestItem testcase = (CTestItem) session.getAttribute("TestCase");
-   testcase.dbReadDetail(dbconn.getConnection());
-%>
+  <form name='DisplayForm' id='DisplayForm' action='<%=CAppConsts.JspLinkCentral%>' method=post>
   <div class='pickdiv'>
     <input type='hidden' name='ReqAct' id='ReqAct' value='DoDisplay'>
     <input type='hidden' name='BtnAct' id='BtnAct' value='error'>
     <input type='hidden' name='DetAct' id='DetAct' value='error'>
+<% 
+   //CUserItem myuser = (CUserItem) session.getAttribute("UserItem");
 
-    <dl class='details'>
-        <dt class='details'>Test Group</dt>
-        <dd class='details'><%=testgroups.getDescByCode(mytestgrp)%></dd>
+   ServletContext scontext = this.getServletContext();
+   CDbConnMan dbconnman = (CDbConnMan) scontext.getAttribute("DbConnMan");   
 
-    <%=testcase.showDisplay(dbconn.getConnection())%>
+   String mytestgrp = (String) session.getAttribute("CurTestGroup");
+   if (mytestgrp == null) mytestgrp = CAppConsts.TagNoValue;
+   String myfc1 = (String) session.getAttribute("CurFC1");
+   if (myfc1 == null) myfc1 = CAppConsts.DefaultForecaster;
+   String myfc2 = (String) session.getAttribute("CurFC2");
+   if (myfc2 == null) myfc2 = CAppConsts.TagNoValue;
+   String viewfc = (String) session.getAttribute("ViewResults");
+   if (viewfc == null) viewfc = CAppConsts.DefaultForecaster;
+
+   Connection conn = dbconnman.getConnection(); 
+  // CCodeDesc testgroups = new CCodeDesc(conn, "TestGroupTbl", "TestGroupId", "TestGroupNm", "TestGroupSrt");
+
+   CTestItem testcase = (CTestItem) session.getAttribute("TestCase");
+   testcase.dbReadDetail(conn);
+%>
+
+
+    <%=testcase.showDisplay(conn,viewfc)%>
 
     </dl>
   </div> 
-</div> 
+<% 
+   dbconnman.returnConnection(conn);
+%>
 </form>
+</div>
 </body>
 </html>
