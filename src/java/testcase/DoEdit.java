@@ -39,27 +39,28 @@ public class DoEdit extends HttpServlet
       CUserItem myuser = (CUserItem) session.getAttribute("UserItem");
 
       manapp.CAppProps props = (manapp.CAppProps) session.getAttribute("AppProps");
-      if (props == null) 
+      if (props == null)
       {
-         props = new manapp.CAppProps(CAppConsts.AppPropFile);
+         props = new manapp.CAppProps();
          session.setAttribute("AppProps", props);
       }
 
       ServletContext scontext = this.getServletContext();
-      CDbConnMan dbconnman = (CDbConnMan) scontext.getAttribute("DbConnMan");   
-      
+      CDbConnMan dbconnman = (CDbConnMan) scontext.getAttribute("DbConnMan");
+
       String btntxt = request.getParameter("BtnAct");
-      
+
       if (btntxt != null && btntxt.equals("Cancel"))
       {
          session.setAttribute("CurrAct", "StatusPage");
          RequestDispatcher rd = request.getRequestDispatcher(CAppConsts.LinkCentral);
          rd.forward(request, response);
          return;
-      }      
-      
+      }
+
       if (btntxt != null && btntxt.equals("Save"))
       {
+          System.out.println("save request= " +request);
          CTestItem testcase = (CTestItem) session.getAttribute("TestCase");
          try
          {
@@ -71,7 +72,7 @@ public class DoEdit extends HttpServlet
                rd.forward(request, response);
                return;
             }
-            Connection conn = dbconnman.getConnection(); 
+            Connection conn = dbconnman.getConnection();
             testcase.dbWriteItem(conn);
             testcase.dbWriteDetail(conn);
             dbconnman.returnConnection(conn);
@@ -81,14 +82,14 @@ public class DoEdit extends HttpServlet
          {
             CLogError.logError(CAppConsts.ErrorFile, false, "CTestItem.updateItem ", ex);
          }
-         
+
          session.setAttribute("CurrAct", "StatusPage");
          RequestDispatcher rd = request.getRequestDispatcher(CAppConsts.LinkCentral);
          rd.forward(request, response);
          return;
-      }      
-      
-      if (btntxt != null && btntxt.equals("Scale"))
+      }
+
+ /*     if (btntxt != null && btntxt.equals("Scale"))
       {
          CTestItem testcase = (CTestItem) session.getAttribute("TestCase");
          try
@@ -101,10 +102,10 @@ public class DoEdit extends HttpServlet
                rd.forward(request, response);
                return;
             }
-            Connection conn = dbconnman.getConnection(); 
+            Connection conn = dbconnman.getConnection();
             testcase.dbWriteItem(conn);
             testcase.dbWriteDetail(conn);
-            
+
             String oldstr = request.getParameter("HideDate");
             String newstr = request.getParameter("BaseDate");
             if (oldstr == null || oldstr.length() < 8 ||
@@ -125,13 +126,13 @@ public class DoEdit extends HttpServlet
          {
             CLogError.logError(CAppConsts.ErrorFile, false, "DoEdit Scale ", ex);
          }
-         
+
          session.setAttribute("CurrAct", "EditPage");
          RequestDispatcher rd = request.getRequestDispatcher(CAppConsts.LinkCentral);
          rd.forward(request, response);
          return;
-      }      
-      
+      }
+
       if (btntxt != null && btntxt.equals("Calc"))
       {
          CTestItem testcase = (CTestItem) session.getAttribute("TestCase");
@@ -145,7 +146,7 @@ public class DoEdit extends HttpServlet
                rd.forward(request, response);
                return;
             }
-            Connection conn = dbconnman.getConnection(); 
+            Connection conn = dbconnman.getConnection();
             testcase.dbWriteItem(conn);
             testcase.dbWriteDetail(conn);
             dbconnman.returnConnection(conn);
@@ -154,20 +155,20 @@ public class DoEdit extends HttpServlet
          {
             CLogError.logError(CAppConsts.ErrorFile, false, "DoEdit Calc ", ex);
          }
-         
+
          session.setAttribute("CurrAct", "EditPage");
          RequestDispatcher rd = request.getRequestDispatcher(CAppConsts.LinkCentral);
          rd.forward(request, response);
          return;
-      }      
-      
+      }
+*/
       // fall through -- return from whence you came
       session.setAttribute("CurrAct", "EditPage");
       RequestDispatcher rd = request.getRequestDispatcher(CAppConsts.LinkCentral);
       rd.forward(request, response);
       return;
    }
-   
+
    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
    /** Handles the HTTP <code>GET</code> method.
     * @param request servlet request
@@ -178,7 +179,7 @@ public class DoEdit extends HttpServlet
    {
       processRequest(request, response);
    }
-   
+
    /** Handles the HTTP <code>POST</code> method.
     * @param request servlet request
     * @param response servlet response
@@ -188,7 +189,7 @@ public class DoEdit extends HttpServlet
    {
       processRequest(request, response);
    }
-   
+
    /** Returns a short description of the servlet.
     */
    public String getServletInfo()

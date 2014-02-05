@@ -21,6 +21,11 @@ public class CNonadItem
    public String reasoncd;
    protected SimpleDateFormat dtfmt;
    
+   public int nageyears;
+   public int nagemonths;
+   public int nageweeks;
+   public int nagedays;
+
    /** Creates a new instance of CNonadItem */
    public CNonadItem()
    {
@@ -29,8 +34,12 @@ public class CNonadItem
       seriescd = CAppConsts.TagNoValue;
       reasoncd = CAppConsts.TagNoValue;
       dtfmt = new SimpleDateFormat(CAppConsts.DateFmtStr);
+      nageyears=0;
+      nagemonths=0;
+      nageweeks=0;
+      nagedays=0;
    }
-   
+
    public String getYmdStr(Date adate)
    {
       SimpleDateFormat ymdfmt = new SimpleDateFormat(CAppConsts.DateFmtYmd);
@@ -45,7 +54,7 @@ public class CNonadItem
    {
       nonadmdate = dtfmt.parse(aval);
    }
-   
+
    public String buildWaiverStr(Connection aconn, int achild, int ashot)
    {
       CMapCode seriesmap = new CMapCode(aconn, "SeriesTbl", "SeriesCd", "SeriesId", CMapCode.TypeInteger);
@@ -53,13 +62,13 @@ public class CNonadItem
                    "child_waiver_id~" + Integer.toString(ashot) + "^" +
                    "child_id~" + Integer.toString(achild) + "^" +
                    "series_id~" + seriesmap.mapCode(seriescd) + "^" +
-                   "waiver_type_id~1^" +   
+                   "waiver_type_id~1^" +
                    "waiver_date~" + getYmdStr(nonadmdate) + "^" +
                    "date_created~" + getYmdStr(new Date()) + "^" +
                    "created_by~IMM_ASSESS_L^";
       return(retstr);
    }
-   
+
    public String buildTiterStr(Connection aconn, int achild, int ashot)
    {
       CMapCode antigenmap = new CMapCode(aconn, "SeriesTbl", "SeriesCd", "AntigenId", CMapCode.TypeInteger);
@@ -71,5 +80,16 @@ public class CNonadItem
                    "date_created~" + getYmdStr(new Date()) + "^" +
                    "created_by~IMM_ASSESS_L^";
       return(retstr);
+   }
+
+   public String exportItem()
+   {
+      StringBuilder retstr = new StringBuilder(128);
+      retstr.append("<NonAdminItem>\n");
+      retstr.append("<NonadmDate>" + dtfmt.format(nonadmdate) + "</NonadmDate>\n");
+      retstr.append("<AntSeriesCd>" + seriescd + "</AntSeriesCd>\n");
+      retstr.append("<ReasonCd>" + reasoncd + "</ReasonCd>\n");
+      retstr.append("</NonAdminItem>\n");
+      return(retstr.toString());
    }
 }

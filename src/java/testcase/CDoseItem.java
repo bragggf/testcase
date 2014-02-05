@@ -22,7 +22,19 @@ public class CDoseItem
    public Date overduedate;
    public String testresult;
    protected SimpleDateFormat dtfmt;
-   
+   public int accageyears;
+   public int accagemonths;
+   public int accageweeks;
+   public int accagedays;
+   public int recageyears;
+   public int recagemonths;
+   public int recageweeks;
+   public int recagedays;
+   public int ovrageyears;
+   public int ovragemonths;
+   public int ovrageweeks;
+   public int ovragedays;
+
    /** Creates a new instance of CDoseItem */
    public CDoseItem()
    {
@@ -35,8 +47,20 @@ public class CDoseItem
       overduedate = new Date(0);
       testresult = CAppConsts.StatusNone;
       dtfmt = new SimpleDateFormat(CAppConsts.DateFmtStr);
-   }
-   
+      accageyears = 0;
+      accagemonths = 0;
+      accageweeks = 0;
+      accagedays = 0;
+      recageyears = 0;
+      recagemonths = 0;
+      recageweeks = 0;
+      recagedays = 0;
+      ovrageyears = 0;
+      ovragemonths = 0;
+      ovrageweeks = 0;
+      ovragedays = 0;
+}
+
    public String getAccelDateStr()
    {
       if (acceldate.getTime() <= 0) return("&nbsp;");
@@ -44,14 +68,14 @@ public class CDoseItem
    }
    public void setAccelDate(String aval) throws Exception
    {
-      if (aval == null || aval.length() < 4) acceldate = new Date(0); 
+      if (aval == null || aval.length() < 4) acceldate = new Date(0);
       else acceldate = dtfmt.parse(aval);
    }
    public void setAccelDate(long aval) throws Exception
    {
       acceldate.setTime(aval);
    }
-   
+
    public String getRecomDateStr()
    {
       if (recomdate.getTime() <= 0) return("&nbsp;");
@@ -59,14 +83,14 @@ public class CDoseItem
    }
    public void setRecomDate(String aval) throws Exception
    {
-      if (aval == null || aval.length() < 4) recomdate = new Date(0); 
+      if (aval == null || aval.length() < 4) recomdate = new Date(0);
       else recomdate = dtfmt.parse(aval);
    }
    public void setRecomDate(long aval) throws Exception
    {
       recomdate.setTime(aval);
    }
-   
+
    public String getOverdueDateStr()
    {
       if (overduedate.getTime() <= 0) return("&nbsp;");
@@ -81,7 +105,7 @@ public class CDoseItem
    {
       overduedate.setTime(aval);
    }
-   
+
    public void setTestResult(CEvalItem aitem)
    {
       this.testresult = CAppConsts.StatusNone;
@@ -103,31 +127,45 @@ public class CDoseItem
          this.testresult = CAppConsts.StatusFail;
          return;
       }
-      
+
       if (aitem.doseord != this.doseord)
       {
          this.testresult = CAppConsts.StatusFail;
          return;
       }
-      
+
       if (aitem.acceldate.getTime() != this.acceldate.getTime())
       {
          this.testresult = CAppConsts.StatusFail;
          return;
       }
-      
+
       if (aitem.recomdate.getTime() != this.recomdate.getTime())
       {
          this.testresult = CAppConsts.StatusFail;
          return;
       }
-      
+
       if (aitem.overduedate.getTime() != this.overduedate.getTime())
       {
          this.testresult = CAppConsts.StatusFail;
          return;
       }
-      
+
       this.testresult = CAppConsts.StatusPass;
+   }
+
+   public String exportItem()
+   {
+      StringBuilder retstr = new StringBuilder(128);
+      retstr.append("<ExpectDoseItem>\n");
+      retstr.append("<SeriesCd>" + seriescd + "</SeriesCd>\n");
+      retstr.append("<ResultCd>" + resultcd + "</ResultCd>\n");
+      retstr.append("<NextDoseNum>" + Integer.toString(doseord) + "</NextDoseNum>\n");
+      retstr.append("<AccelDate>" + dtfmt.format(acceldate) + "</AccelDate>\n");
+      retstr.append("<RecomDate>" + dtfmt.format(recomdate) + "</RecomDate>\n");
+      retstr.append("<OverdueDate>" + dtfmt.format(overduedate) + "</OverdueDate>\n");
+      retstr.append("</ExpectDoseItem>\n");
+      return(retstr.toString());
    }
 }

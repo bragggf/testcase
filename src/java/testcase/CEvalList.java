@@ -39,6 +39,7 @@ public class CEvalList extends CStringList
             myitem.acceldate = rset.getDate(5);
             myitem.recomdate = rset.getDate(6);
             myitem.overduedate = rset.getDate(7);
+            
             this.addItem(myitem.evalid, myitem);
          }
          rset.close();
@@ -104,31 +105,66 @@ public class CEvalList extends CStringList
       CCodeDesc series = new CCodeDesc(aconn, "SeriesTbl","SeriesCd","SeriesNm","SeriesCd");
       CCodeDesc results = new CCodeDesc(aconn, "EvalResultTbl","ResultCd","ResultNm","ResultCd");
       
-      String retstr = "<dt class='details'>Evaluated Next Dose</dt>\n";
-      retstr = retstr + "<dd class='details'>\n";
-      retstr = retstr + "<table class='factors' summary='next dose'>\n";
-      retstr = retstr + "<tr>\n";
-      retstr = retstr + "<th class='factors' scope='col'>Series</th>\n";
-      retstr = retstr + "<th class='factors' scope='col'>Result</th>\n";
-      retstr = retstr + "<th class='factors' scope='col'>Dose Number</th>\n";
-      retstr = retstr + "<th class='factors' scope='col'>Accelerated Date</th>\n";
-      retstr = retstr + "<th class='factors' scope='col'>Recommended Date</th>\n";
-      retstr = retstr + "<th class='factors' scope='col'>Overdue Date</th></tr>\n";
       
+        String retstr = " <table class=\"result\" >";
+        retstr = retstr + "<tr>";
+        retstr = retstr + "<td class=\"restitleleft\" >&nbsp;&nbsp;Evaluation Results</td> </tr> </table>";
+        
+        retstr = retstr + "<table class='factors' summary='next dose evaluation'>\n";
+        retstr = retstr + "<col style='width:20%'><col style='width:15%'><col style='width:5%'>" ;
+        retstr = retstr + "<col style='width:3%'><col style='width:3%'><col style='width:3%'><col style='width:3%'><col style='width:8%'>";
+        retstr = retstr + "<col style='width:3%'><col style='width:3%'><col style='width:3%'><col style='width:3%'><col style='width:8%'>";
+        retstr = retstr + "<col style='width:3%'><col style='width:3%'><col style='width:3%'><col style='width:3%'><col style='width:8%'>";
+
+        retstr = retstr + "<tr>\n";
+        retstr = retstr + " <td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td class='subtitle' style='border-bottom-color: #0066FF;' colspan='5'>Accelerated Schedule</td><td class='subtitle' style='border-bottom-color: #00CC00;' colspan='5'>Recommended Schedule</td><td class='subtitle'  style='border-bottom-color: #FF6600;' colspan='5'>Overdue Schedule</td></tr><tr>";
+        retstr = retstr + "<th class='factors' scope='col'>Series</th>\n";
+        retstr = retstr + "<th class='factors' scope='col'>Status</th>\n";
+        retstr = retstr + "<th class='factors' scope='col'>Dose</th>\n";
+        retstr = retstr + "<th class='factors' scope='col'>Yrs</th>\n";
+        retstr = retstr + "<th class='factors' scope='col'>Mos</th>\n";
+        retstr = retstr + "<th class='factors' scope='col'>Wks</th>\n";
+        retstr = retstr + "<th class='factors' scope='col'>Dys</th>\n";
+        retstr = retstr + "<th class='factors' scope='col'>Acc Date</th>\n";
+        retstr = retstr + "<th class='factors' scope='col'>Yrs</th>\n";
+        retstr = retstr + "<th class='factors' scope='col'>Mos</th>\n";
+        retstr = retstr + "<th class='factors' scope='col'>Wks</th>\n";
+        retstr = retstr + "<th class='factors' scope='col'>Dys</th>\n";
+        retstr = retstr + "<th class='factors' scope='col'>Rec Date</th>\n";
+        retstr = retstr + "<th class='factors' scope='col'>Yrs</th>\n";
+        retstr = retstr + "<th class='factors' scope='col'>Mos</th>\n";
+        retstr = retstr + "<th class='factors' scope='col'>Wks</th>\n";
+        retstr = retstr + "<th class='factors' scope='col'>Dys</th>\n";
+        retstr = retstr + "<th class='factors' scope='col'>Ovr Date</th></tr>\n";
+         
+     
       for (int idx = 0; idx < this.getCount(); idx++)
       {
          CEvalItem myitem = (CEvalItem) this.getItem(idx);
          retstr = retstr + "<tr>\n";
-         retstr = retstr + "<td class='factors'>" + series.getDescByCode(myitem.seriescd) + "</td>\n";
-         retstr = retstr + "<td class='factors'>" + results.getDescByCode(myitem.resultcd) + "</td>\n";
+         retstr = retstr + "<td class='result'>" + series.getDescByCode(myitem.seriescd) + "</td>\n";
+         retstr = retstr + "<td class='result'>" + results.getDescByCode(myitem.resultcd) + "</td>\n";
          retstr = retstr + "<td class='factors'>" + Integer.toString(myitem.doseord) + "</td>\n";
-         retstr = retstr + "<td class='factors'>" + myitem.getAccelDateStr() + "</td>\n";
-         retstr = retstr + "<td class='factors'>" + myitem.getRecomDateStr() + "</td>\n";
-         retstr = retstr + "<td class='factors'>" + myitem.getOverdueDateStr() + "</td>\n";
+           
+         retstr = retstr + "<td class='factors' name='EAyrs"+ idx +"' id='EAyrs"+ idx +"'></td>\n";
+         retstr = retstr + "<td class='factors' name='EAmos"+ idx +"' id='EAmos"+ idx +"'></td>\n";
+         retstr = retstr + "<td class='factors' name='EAwks"+ idx +"' id='EAwks"+ idx +"'></td>\n";
+         retstr = retstr + "<td class='factors' name='EAdys"+ idx +"' id='EAdys"+ idx +"'></td>\n";
+         retstr = retstr + "<td class='factors' name='EAdate"+ idx +"' id='EAdate"+ idx +"'>" + myitem.getAccelDateStr() + "</td>\n";
+         retstr = retstr + "<td class='factors' name='ERyrs"+ idx +"' id='ERyrs"+ idx +"'></td>\n";
+         retstr = retstr + "<td class='factors' name='ERmos"+ idx +"' id='ERmos"+ idx +"'></td>\n";
+         retstr = retstr + "<td class='factors' name='ERwks"+ idx +"' id='ERwks"+ idx +"'></td>\n";
+         retstr = retstr + "<td class='factors' name='ERdys"+ idx +"' id='ERdys"+ idx +"'></td>\n";
+         retstr = retstr + "<td class='factors' name='ERdate"+ idx +"' id='ERdate"+ idx +"'>" + myitem.getRecomDateStr() + "</td>\n";
+         retstr = retstr + "<td class='factors' name='EOyrs"+ idx +"' id='EOyrs"+ idx +"'></td>\n";
+         retstr = retstr + "<td class='factors' name='EOmos"+ idx +"' id='EOmos"+ idx +"'></td>\n";
+         retstr = retstr + "<td class='factors' name='EOwks"+ idx +"' id='EOwks"+ idx +"'></td>\n";
+         retstr = retstr + "<td class='factors' name='EOdys"+ idx +"' id='EOdys"+ idx +"'></td>\n";
+         retstr = retstr + "<td class='factors' name='EOdate"+ idx +"' id='EOdate"+ idx +"'>" + myitem.getOverdueDateStr() + "</td>\n";
          retstr = retstr + "</tr>\n";
       }      
 
-      retstr = retstr + "</table></dd>\n";
+      retstr = retstr + "</table><br>\n";
       return(retstr);
    }
 
@@ -138,33 +174,65 @@ public class CEvalList extends CStringList
       CCodeDesc series = new CCodeDesc(aconn, "SeriesTbl","SeriesCd","SeriesNm","SeriesCd");
       CCodeDesc results = new CCodeDesc(aconn, "EvalResultTbl","ResultCd","ResultNm","ResultCd");
       
-      String retstr = "<dt class='details'>Evaluated Next Dose</dt>\n";
-      retstr = retstr + "<dd class='details'>\n";
-
-      retstr = retstr + "<table class='factors' summary='next dose'>\n";
-      retstr = retstr + "<tr>\n";
-      retstr = retstr + "<th class='factors' scope='col'>Series</th>\n";
-      retstr = retstr + "<th class='factors' scope='col'>Result</th>\n";
-      retstr = retstr + "<th class='factors' scope='col'>Dose Number</th>\n";
-      retstr = retstr + "<th class='factors' scope='col'>Accelerated Date</th>\n";
-      retstr = retstr + "<th class='factors' scope='col'>Recommended Date</th>\n";
-      retstr = retstr + "<th class='factors' scope='col'>Overdue Date</th>\n";
-      retstr = retstr + "</tr>\n";
       
+        String retstr = " <table class=\"result\" >";
+        retstr = retstr + "<tr>";
+        retstr = retstr + "<td class=\"restitleleft\" >&nbsp;&nbsp;Evaluation Results</td> </tr></table> ";
+
+        retstr = retstr + "<table class='factors' summary='next dose evaluation'>\n";
+        retstr = retstr + "<col style='width:20%'><col style='width:15%'><col style='width:5%'>" ;
+        retstr = retstr + "<col style='width:3%'><col style='width:3%'><col style='width:3%'><col style='width:3%'><col style='width:8%'>";
+        retstr = retstr + "<col style='width:3%'><col style='width:3%'><col style='width:3%'><col style='width:3%'><col style='width:8%'>";
+        retstr = retstr + "<col style='width:3%'><col style='width:3%'><col style='width:3%'><col style='width:3%'><col style='width:8%'>";
+
+        retstr = retstr + "<tr>\n";
+        retstr = retstr + " <td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td class='subtitle' style='border-bottom-color: #0066FF;' colspan='5'>Accelerated Schedule</td><td class='subtitle' style='border-bottom-color: #00CC00;' colspan='5'>Recommended Schedule</td><td class='subtitle'  style='border-bottom-color: #FF6600;' colspan='5'>Overdue Schedule</td></tr><tr>";
+        retstr = retstr + "<th class='factors' scope='col'>Series</th>\n";
+        retstr = retstr + "<th class='factors' scope='col'>Status</th>\n";
+        retstr = retstr + "<th class='factors' scope='col'>Dose</th>\n";
+        retstr = retstr + "<th class='factors' scope='col'>Yrs</th>\n";
+        retstr = retstr + "<th class='factors' scope='col'>Mos</th>\n";
+        retstr = retstr + "<th class='factors' scope='col'>Wks</th>\n";
+        retstr = retstr + "<th class='factors' scope='col'>Dys</th>\n";
+        retstr = retstr + "<th class='factors' scope='col'>Acc Date</th>\n";
+        retstr = retstr + "<th class='factors' scope='col'>Yrs</th>\n";
+        retstr = retstr + "<th class='factors' scope='col'>Mos</th>\n";
+        retstr = retstr + "<th class='factors' scope='col'>Wks</th>\n";
+        retstr = retstr + "<th class='factors' scope='col'>Dys</th>\n";
+        retstr = retstr + "<th class='factors' scope='col'>Rec Date</th>\n";
+        retstr = retstr + "<th class='factors' scope='col'>Yrs</th>\n";
+        retstr = retstr + "<th class='factors' scope='col'>Mos</th>\n";
+        retstr = retstr + "<th class='factors' scope='col'>Wks</th>\n";
+        retstr = retstr + "<th class='factors' scope='col'>Dys</th>\n";
+        retstr = retstr + "<th class='factors' scope='col'>Ovr Date</th></tr>\n";
+         
       for (int idx = 0; idx < this.getCount(); idx++)
       {
          CEvalItem myitem = (CEvalItem) this.getItem(idx);
          retstr = retstr + "<tr>\n";
-         retstr = retstr + "<td class='factors'>" + series.getDescByCode(myitem.seriescd) + "</td>\n";
-         retstr = retstr + "<td class='factors'>" + results.getDescByCode(myitem.resultcd) + "</td>\n";
+         retstr = retstr + "<td class='result'>" + series.getDescByCode(myitem.seriescd) + "</td>\n";
+         retstr = retstr + "<td class='result'>" + results.getDescByCode(myitem.resultcd) + "</td>\n";
          retstr = retstr + "<td class='factors'>" + Integer.toString(myitem.doseord) + "</td>\n";
-         retstr = retstr + "<td class='factors'>" + myitem.getAccelDateStr() + "</td>\n";
-         retstr = retstr + "<td class='factors'>" + myitem.getRecomDateStr() + "</td>\n";
-         retstr = retstr + "<td class='factors'>" + myitem.getOverdueDateStr() + "</td>\n";
+           
+         retstr = retstr + "<td class='factors' name='EAyrs"+ idx +"' id='EAyrs"+ idx +"'></td>\n";
+         retstr = retstr + "<td class='factors' name='EAmos"+ idx +"' id='EAmos"+ idx +"'></td>\n";
+         retstr = retstr + "<td class='factors' name='EAwks"+ idx +"' id='EAwks"+ idx +"'></td>\n";
+         retstr = retstr + "<td class='factors' name='EAdys"+ idx +"' id='EAdys"+ idx +"'></td>\n";
+         retstr = retstr + "<td class='factors' name='EAdate"+ idx +"' id='EAdate"+ idx +"'>" + myitem.getAccelDateStr() + "</td>\n";
+         retstr = retstr + "<td class='factors' name='ERyrs"+ idx +"' id='ERyrs"+ idx +"'></td>\n";
+         retstr = retstr + "<td class='factors' name='ERmos"+ idx +"' id='ERmos"+ idx +"'></td>\n";
+         retstr = retstr + "<td class='factors' name='ERwks"+ idx +"' id='ERwks"+ idx +"'></td>\n";
+         retstr = retstr + "<td class='factors' name='ERdys"+ idx +"' id='ERdys"+ idx +"'></td>\n";
+         retstr = retstr + "<td class='factors' name='ERdate"+ idx +"' id='ERdate"+ idx +"'>" + myitem.getRecomDateStr() + "</td>\n";
+         retstr = retstr + "<td class='factors' name='EOyrs"+ idx +"' id='EOyrs"+ idx +"'></td>\n";
+         retstr = retstr + "<td class='factors' name='EOmos"+ idx +"' id='EOmos"+ idx +"'></td>\n";
+         retstr = retstr + "<td class='factors' name='EOwks"+ idx +"' id='EOwks"+ idx +"'></td>\n";
+         retstr = retstr + "<td class='factors' name='EOdys"+ idx +"' id='EOdys"+ idx +"'></td>\n";
+         retstr = retstr + "<td class='factors' name='EOdate"+ idx +"' id='EOdate"+ idx +"'>" + myitem.getOverdueDateStr() + "</td>\n";
          retstr = retstr + "</tr>\n";
       }      
 
-      retstr = retstr + "</table></dd>\n";
+      retstr = retstr + "</table><br>\n";
       return(retstr);
    }
    

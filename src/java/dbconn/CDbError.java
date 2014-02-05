@@ -12,13 +12,13 @@ import java.util.Date;
 
 public class CDbError
 {
-   
+
    /** Creates a new instance of CLogError */
    public CDbError()
    {
    }
 
-   /** write error message to referenced file 
+   /** write error message to referenced file
     * @param aerrfile name of error log file
     * @param aecho whether or not to echo error message to System.err
     * @param astr message string
@@ -28,11 +28,14 @@ public class CDbError
    {
       try
       {
+         manapp.CAppProps props = new manapp.CAppProps();
+         String errfile = aerrfile;
+         if (errfile == null) errfile = props.ErrorLogFile;
          SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
          Date dt = new Date();
          String datestr = df.format(dt);
 
-         FileOutputStream errfos = new FileOutputStream(aerrfile, true);
+         FileOutputStream errfos = new FileOutputStream(errfile, true);
          PrintWriter errout = new PrintWriter(errfos);
          if (aex != null)
          {

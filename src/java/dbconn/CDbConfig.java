@@ -14,16 +14,19 @@ import java.security.*;
  * Reads and parses a database connection configuration file of the following form:
 <code>
 #
-dbClassNm=com.ibm.db2.jcc.DB2Driver
-dbDriver=jdbc:db2://
-dbHost=214.3.107.12 
+dbClassNm=com.mysql.jdbc.Driver
+dbDriver=jdbc:mysql://
+dbHost=127.0.0.1
 dbPortSep=:
-dbPort=50000 
+dbPort=3306
 dbUrlSep=/
-dbDatabase=MCFAS 
+dbDatabase=mydb
 dbTestQry=Select 1
 dbProps=
-dbUserPath=/prod/mcfas/bpfmfiles/dbuser.txt
+dbPoolInit=1
+dbPoolMax=8
+dbPoolIdleMax=1
+dbUserPath=/apps/myapp/conf/dbuser.txt
 #
 </code>
  */
@@ -61,11 +64,11 @@ public class CDbConfig
    public int dbPoolMax;
    /** maximum number of idle connections to keep in pool */
    public int dbPoolIdleMax;
-   
+
    protected String errfile;
-   
-   /** Creates a new instance of CDbConfig 
-       @param acfg name of database connection configuration file; 
+
+   /** Creates a new instance of CDbConfig
+       @param acfg name of database connection configuration file;
        @param aerr name of error log file. */
    public CDbConfig(String acfg, String aerr)
    {
@@ -83,21 +86,21 @@ public class CDbConfig
       dbUserPath = "";
       dbUserName = "";
       dbPassword = "";
-      dbPoolInit = 2;
-      dbPoolMax = 4;
-      dbPoolIdleMax = 3;
+      dbPoolInit = 1;
+      dbPoolMax = 8;
+      dbPoolIdleMax = 1;
       readConfig(acfg);
    }
-   
-   /** Read database connection configuration information from text file with referenced name. 
+
+   /** Read database connection configuration information from text file with referenced name.
        @param acfg name of database connection configuration file. */
-   public void readConfig(String acfg) 
+   public final void readConfig(String acfg)
    {
       try
       {
          FileReader frd = new FileReader(acfg);
          BufferedReader finp = new BufferedReader(frd);
-      
+
          String buf = "#";
          while (buf != null)
          {
@@ -111,7 +114,7 @@ public class CDbConfig
 
             String fldtoken = buf.substring(0, sep);
             String value = buf.substring(sep+1);
-            
+
             if (fldtoken.equals("dbClassNm"))
                dbClassNm = value;
             else if (fldtoken.equals("dbDriver"))
@@ -130,7 +133,7 @@ public class CDbConfig
                dbTestQry = value;
             else if (fldtoken.equals("dbProps"))
                dbProps = value;
-            else if (fldtoken.equals("dbUserPath")) 
+            else if (fldtoken.equals("dbUserPath"))
                dbUserPath = value;
             else if (fldtoken.equals("dbPoolInit"))
                dbPoolInit = Integer.parseInt(value);
@@ -139,7 +142,7 @@ public class CDbConfig
             else if (fldtoken.equals("dbPoolIdleMax"))
                dbPoolIdleMax = Integer.parseInt(value);
             if (dbPoolIdleMax < dbPoolInit) dbPoolIdleMax = dbPoolInit;
-            
+
          }
          dbUrl = dbDriver + dbHost + dbPortSep + dbPort + dbUrlSep + dbDatabase;
          if (!dbUserPath.equals(""))
@@ -149,12 +152,12 @@ public class CDbConfig
             String rawuser = pinp.readLine();
             String rawpass = pinp.readLine();
             pinp.close();
-            
+
             String dbUserKey = "dbUrl=dbDriver+dbHost+dbPortSep+dbPort+dbUrlSep+dbDatabase";
             String keystr = crypto.CMd5Hash.toHash(dbUserKey);
             Key mykey = crypto.CAesEncrypt.getKey(keystr);
-            dbUserName = crypto.CAesEncrypt.decrypt(mykey, rawuser);
-            dbPassword = crypto.CAesEncrypt.decrypt(mykey, rawpass);
+            dbUserName =crypto.CAesEncrypt.decrypt(mykey, rawuser);//rawuser; //
+            dbPassword =crypto.CAesEncrypt.decrypt(mykey, rawpass);//rawpass; // 
          }
          finp.close();
       }

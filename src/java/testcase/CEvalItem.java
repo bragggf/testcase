@@ -22,6 +22,7 @@ public class CEvalItem
    public Date overduedate;
    protected SimpleDateFormat dtfmt;
    protected SimpleDateFormat ymdfmt;
+
    
    /** Creates a new instance of CEvalItem */
    public CEvalItem()

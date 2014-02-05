@@ -1,8 +1,8 @@
 /*
  * CValidUser.java
- * 
+ *
  * Created on Jan 22, 2009, 5:08:21 PM
- * 
+ *
  * By lwaisanen
  */
 
@@ -12,7 +12,7 @@ import java.sql.*;
 import java.util.Date;
 import manapp.CAppConsts;
 
-public class CValidUser 
+public class CValidUser
 {
    final static public long MilsecDay =  24 * 60 * 60 * 1000;
    final static public int FailLockOpen = 0;
@@ -23,7 +23,7 @@ public class CValidUser
 
    protected dbconn.CDbProps dbprops;
    protected CLoginProps loginprops;
-   
+
    public String userid;
    public String role;
    private String passhash;
@@ -32,12 +32,12 @@ public class CValidUser
    private Date lastsuccess;
    private int numfailures;
    private int numsuccess;
-   
+
    public String failreason;
    public String nameprefix;
    public String firstname;
    public String lastname;
-   
+
    public CValidUser()
    {
       dbprops = new dbconn.CDbProps();
@@ -56,12 +56,12 @@ public class CValidUser
       firstname = "";
       lastname = "";
    }
-   
+
    public boolean isValidUser(Connection aconn, String auser, String apasswd)
    {
       try
       {
-         if (aconn == null) 
+         if (aconn == null)
          {
             failreason = "Database is not available.";
             return(false);
@@ -75,13 +75,13 @@ public class CValidUser
             mypasshash = crypto.CSha256Hash.toHash(apasswd);
          else
             mypasshash = crypto.CMd5Hash.toHash(apasswd);
-         
+
          String qstr = "Select PassHash,AppRole,PwChangeTm,LastFailure,LastSuccess,NumFailures,NumSuccess" +
                        " From UserTbl Where UserId=?";
          PreparedStatement pstmt = aconn.prepareStatement(qstr);
          pstmt.setString(1, auser);
          ResultSet rset = pstmt.executeQuery();
-         
+
          if (rset.next())
          {
             passhash = rset.getString(1);
@@ -94,7 +94,7 @@ public class CValidUser
                tstamp = new java.sql.Timestamp(exptm.getTime());
             }
             pwchangedt = new java.util.Date(tstamp.getTime());
-            
+
             tstamp = rset.getTimestamp(4);
             if (rset.wasNull()) tstamp = new java.sql.Timestamp(0L);
             lastfailure = new java.util.Date(tstamp.getTime());
@@ -102,10 +102,10 @@ public class CValidUser
             tstamp = rset.getTimestamp(5);
             if (rset.wasNull()) tstamp = new java.sql.Timestamp(0L);
             lastsuccess = new java.util.Date(tstamp.getTime());
-            
+
             numfailures = rset.getInt(6);
             if (rset.wasNull()) numfailures = 0;
-            
+
             numsuccess = rset.getInt(7);
             if (rset.wasNull()) numsuccess = 0;
 
@@ -131,23 +131,22 @@ public class CValidUser
             failreason = "Account is temporarily locked.";
             return(false);
          }
-         
+
          if (!passhash.equals(mypasshash))
          {
             dbFailure(aconn);
             failreason = "Invalid userid/password combination.";
             return(false);
          }
-System.err.println("role " + role);
          if (!isUserRole(role))
          {
             failreason = "User not authorized.";
             return(false);
          }
-         
+
          // at this point, we have a valid user.
          dbSuccess(aconn);
-         
+
          // check if password has expired
          Date today = new Date();
          Date pwdate = new Date(pwchangedt.getTime() + CValidUser.MilsecDay * loginprops.PwLifeDays);
@@ -188,7 +187,7 @@ System.err.println("role " + role);
          dbconn.CDbError.logError(dbprops.ErrorLogFile, false, "dbUpdateItem error: ", ex);
       }
    }
-   
+
    public void dbSuccess(Connection aconn)
    {
       try
@@ -218,7 +217,7 @@ System.err.println("role " + role);
       {
          numfailures++;
          lastfailure = new Date();
-         
+
          PreparedStatement stmt = aconn.prepareStatement(
                 "Update UserTbl set LastFailure=?,NumFailures=? Where UserId=?");
          java.sql.Timestamp tstmp = new java.sql.Timestamp(lastfailure.getTime());
@@ -233,7 +232,7 @@ System.err.println("role " + role);
          dbconn.CDbError.logError(dbprops.ErrorLogFile, false, "dbFailure error: ", ex);
       }
    }
-   
+
    public int getFailLocked()
    {
       if (numfailures < loginprops.MaxLoginTries) return(CLoginProps.FailLockOpen);

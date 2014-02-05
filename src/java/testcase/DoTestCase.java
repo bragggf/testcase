@@ -18,6 +18,7 @@ import dbconn.CDbConnMan;
 import manapp.*;
 import login.*;
 
+
 /** central dispatch servlet */
 public class DoTestCase extends HttpServlet
 {
@@ -42,7 +43,7 @@ public class DoTestCase extends HttpServlet
          RequestDispatcher rd = request.getRequestDispatcher(CAppConsts.LinkLoginPage + ".jsp");
          rd.forward(request, response);
          return;
-      }      
+      }
 
       String curract = (String) session.getAttribute("CurrAct");
       if ((curract == null) || curract.equals(""))
@@ -51,7 +52,7 @@ public class DoTestCase extends HttpServlet
          if ((curract == null) || (curract.equals(""))) curract = "GetNode";
       }
       session.removeAttribute("CurrAct");
-      
+
       if (curract.equals("DoLogin"))
       {
          RequestDispatcher rd = request.getRequestDispatcher("/DoLogin");
@@ -107,68 +108,88 @@ public class DoTestCase extends HttpServlet
          RequestDispatcher rd = request.getRequestDispatcher("/DoStatus");
          rd.forward(request, response);
          return;
-      }      
+      }
 
       if (curract.equals("EditPage"))
       {
          RequestDispatcher rd = request.getRequestDispatcher("EditPage.jsp");
          rd.forward(request, response);
          return;
-      }      
+      }
 
       if (curract.equals("DoEdit"))
       {
          RequestDispatcher rd = request.getRequestDispatcher("/DoEdit");
          rd.forward(request, response);
          return;
-      }      
+      }
 
       if (curract.equals("DisplayPage"))
       {
          RequestDispatcher rd = request.getRequestDispatcher("DisplayPage.jsp");
          rd.forward(request, response);
          return;
-      }      
+      }
 
       if (curract.equals("DoDisplay"))
       {
          RequestDispatcher rd = request.getRequestDispatcher("/DoDisplay");
          rd.forward(request, response);
          return;
-      }      
+      }
 
       if (curract.equals("SummaryPage"))
       {
          RequestDispatcher rd = request.getRequestDispatcher("SummaryPage.jsp");
          rd.forward(request, response);
          return;
-      }      
+      }
+
+      if (curract.equals("ImportPage"))
+      {
+         RequestDispatcher rd = request.getRequestDispatcher("ImportPage.jsp");
+         rd.forward(request, response);
+         return;
+      }
+
+      if (curract.equals("DoImport"))
+      {
+         RequestDispatcher rd = request.getRequestDispatcher("/DoImport");
+         rd.forward(request, response);
+         return;
+      }
    }
-   
+
    public void init() throws ServletException
    {
       // create the connection pool manager
       dbconn.CDbProps props = new dbconn.CDbProps();
-      CDbConnMan dbconnman = new CDbConnMan(props.DbConfigFile, props.ErrorLogFile); 
+      CDbConnMan dbconnman = new CDbConnMan(props.DbConfigFile, props.ErrorLogFile);
       ServletContext scontext = this.getServletContext();
       scontext.setAttribute("DbConnMan", dbconnman);
-      
-      CDbConnMan remconnman = new CDbConnMan(props.RemConfigFile, props.ErrorLogFile); 
+
+      CDbConnMan remconnman = new CDbConnMan(props.RemConfigFile, props.ErrorLogFile);
       scontext.setAttribute("RemConnMan", remconnman);
+      
+      CForecasters fcinfo = new CForecasters(dbconnman.getConnection()); 
+    
    }
-   
+
    public void destroy()
    {
       ServletContext scontext = this.getServletContext();
-      CDbConnMan dbconnman = (CDbConnMan) scontext.getAttribute("DbConnMan"); 
+      CDbConnMan dbconnman = (CDbConnMan) scontext.getAttribute("DbConnMan");
       dbconnman.shutdown();
       scontext.removeAttribute("DbConnMan");
-      
-      CDbConnMan actconnman = (CDbConnMan) scontext.getAttribute("ActConnMan"); 
+
+      CDbConnMan actconnman = (CDbConnMan) scontext.getAttribute("ActConnMan");
       actconnman.shutdown();
       scontext.removeAttribute("ActConnMan");
+      
+      actconnman.drivercleanup();
+      
    }
-  
+
    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
    /** Handles the HTTP <code>GET</code> method.
     * @param request servlet request
@@ -179,7 +200,7 @@ public class DoTestCase extends HttpServlet
    {
       processRequest(request, response);
    }
-   
+
    /** Handles the HTTP <code>POST</code> method.
     * @param request servlet request
     * @param response servlet response
