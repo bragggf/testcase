@@ -43,9 +43,9 @@ public class CShotList extends CStringList
             myitem.mfrcd = rset.getString(4);
             
             myitem.reftype = rset.getString(5);
-            if (rset.wasNull()) myitem.reftype = CConsts.RefTypeAge;
+            if (rset.wasNull()) myitem.reftype = CAppConsts.RefTypeAge;
             myitem.periodtype = rset.getString(6);
-            if (rset.wasNull()) myitem.periodtype = CConsts.PeriodDays;
+            if (rset.wasNull()) myitem.periodtype = CAppConsts.PeriodDays;
             myitem.periodamt = rset.getInt(7);
             if (rset.wasNull()) myitem.periodamt = 0; 
             myitem.periodoff = rset.getInt(8);
@@ -58,7 +58,7 @@ public class CShotList extends CStringList
       }
       catch (Exception ex)
       {
-         CLogError.logError(CConsts.ErrMsgFile, false, "CShotList.dbReadList cannot read list. ", ex);
+         CLogError.logError(CAppConsts.ErrorFile, false, "CShotList.dbReadList cannot read list. ", ex);
       }
    }
       
@@ -73,7 +73,7 @@ public class CShotList extends CStringList
       }
       catch (Exception ex)
       {
-         CLogError.logError(CConsts.ErrMsgFile, false, "CShotList.dbDeleteList cannot delete list. ", ex);
+         CLogError.logError(CAppConsts.ErrorFile, false, "CShotList.dbDeleteList cannot delete list. ", ex);
       }
    }
    
@@ -111,7 +111,7 @@ public class CShotList extends CStringList
       }
       catch (Exception ex)
       {
-         CLogError.logError(CConsts.ErrMsgFile, false, "CShotList.dbWriteList cannot write list. ", ex);
+         CLogError.logError(CAppConsts.ErrorFile, false, "CShotList.dbWriteList cannot write list. ", ex);
       }
    }
 
@@ -180,21 +180,21 @@ public class CShotList extends CStringList
          retstr = retstr + "<td class='edits'>" +
                "<label class='hidden' for='"+vacid+"'>Vaccine for vaccination " + Integer.toString(ivac) + "</label>" +
                "<select name='"+vacid+"' id='"+vacid+"' size=1 onchange='javascript:ChangeVaccine(\""+vacid+"\",\""+mfrid+"\")'>\n";
-         retstr = retstr + "<option value='"+CConsts.TagNoValue+"'>" + CConsts.TagNoLabel + "</option>\n";
+         retstr = retstr + "<option value='"+CAppConsts.TagNoValue+"'>" + CAppConsts.TagNoLabel + "</option>\n";
          retstr = retstr + vaccines.makeOptions(myitem.vaccinecd);
          retstr = retstr + "</select></td>\n";
 
          retstr = retstr + "<td class='edits'>";
          retstr = retstr + "<label class='hidden' for='"+mfrid+"'>Manufacturer for vaccination " + Integer.toString(ivac) + "</label>" +
                            "<select name='"+mfrid+"' id='"+mfrid+"' size=1>\n";
-         retstr = retstr + "<option value='"+CConsts.TagNoValue+"'>" + CConsts.TagNoLabel + "</option>\n";
+         retstr = retstr + "<option value='"+CAppConsts.TagNoValue+"'>" + CAppConsts.TagNoLabel + "</option>\n";
          retstr = retstr + mfrs.makeOptions(myitem.vaccinecd, myitem.mfrcd);
          retstr = retstr + "</select></td>\n";
          retstr = retstr + "</tr>\n";
       }      
 
       CShotItem myitem = new CShotItem();
-      int nslot = Math.max(CConsts.NewSlotShotHist, CConsts.NumSlotShotHist - getCount());
+      int nslot = Math.max(CAppConsts.NewSlotShotHist, CAppConsts.NumSlotShotHist - getCount());
       for (int idx = 0; idx < nslot; idx++)
       {
          ivac++;
@@ -231,15 +231,15 @@ public class CShotList extends CStringList
          retstr = retstr + "<td class='edits'>" +
                "<label class='hidden' for='"+vacid+"'>Vaccine for vaccination " + Integer.toString(ivac) + "</label>" +
                "<select name='"+vacid+"' id='"+vacid+"' size=1 onchange='javascript:ChangeVaccine(\""+vacid+"\",\""+mfrid+"\")'>\n";
-         retstr = retstr + "<option value='"+CConsts.TagNoValue+"'>" + CConsts.TagNoLabel + "</option>\n";
-         retstr = retstr + vaccines.makeOptions(CConsts.TagNoValue);
+         retstr = retstr + "<option value='"+CAppConsts.TagNoValue+"'>" + CAppConsts.TagNoLabel + "</option>\n";
+         retstr = retstr + vaccines.makeOptions(CAppConsts.TagNoValue);
          retstr = retstr + "</select></td>\n";
 
          retstr = retstr + "<td class='edits'>";
          retstr = retstr + "<label class='hidden' for='"+mfrid+"'>Manufacturer for vaccination " + Integer.toString(ivac) + "</label>" +
                            "<select name='"+mfrid+"' id='"+mfrid+"' size=1>\n";
-         retstr = retstr + "<option value='"+CConsts.TagNoValue+"'>" + CConsts.TagNoLabel + "</option>\n";
-         retstr = retstr + mfrs.makeOptions(CConsts.TagNoValue, CConsts.TagNoValue);
+         retstr = retstr + "<option value='"+CAppConsts.TagNoValue+"'>" + CAppConsts.TagNoLabel + "</option>\n";
+         retstr = retstr + mfrs.makeOptions(CAppConsts.TagNoValue, CAppConsts.TagNoValue);
          retstr = retstr + "</select></td>\n";
          retstr = retstr + "</tr>\n";
       }
@@ -271,7 +271,7 @@ public class CShotList extends CStringList
          String vacstr = arequest.getParameter(vacid);
          String amtstr = arequest.getParameter(amtid);
          
-         if (vacstr.equals(CConsts.TagNoValue) ||
+         if (vacstr.equals(CAppConsts.TagNoValue) ||
              amtstr == null || amtstr.length() == 0) 
          {
             continue;
@@ -291,7 +291,7 @@ public class CShotList extends CStringList
          tmplist.addItem(nextid, myitem);
       }
       
-      int nslot = Math.max(CConsts.NewSlotShotHist, CConsts.NumSlotShotHist - getCount());
+      int nslot = Math.max(CAppConsts.NewSlotShotHist, CAppConsts.NumSlotShotHist - getCount());
       for (int idx = 0; idx < nslot; idx++)
       {
          CShotItem myitem = new CShotItem();
@@ -307,7 +307,7 @@ public class CShotList extends CStringList
          String vacstr = arequest.getParameter(vacid);
          String amtstr = arequest.getParameter(amtid);
          
-         if (vacstr.equals(CConsts.TagNoValue) || 
+         if (vacstr.equals(CAppConsts.TagNoValue) || 
              amtstr == null || amtstr.length() == 0) 
          {
             continue;

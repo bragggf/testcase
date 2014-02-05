@@ -27,14 +27,14 @@ public class CEvalItem
    public CEvalItem()
    {
       evalid = "";
-      seriescd = CConsts.TagNoValue;
+      seriescd = CAppConsts.TagNoValue;
       resultcd = "";
       doseord = 0;
       acceldate = new Date(0);
       recomdate = new Date(0);
       overduedate = new Date(0);
-      dtfmt = new SimpleDateFormat(CConsts.DateFmtStr);
-      ymdfmt = new SimpleDateFormat(CConsts.DateFmtYmd);
+      dtfmt = new SimpleDateFormat(CAppConsts.DateFmtStr);
+      ymdfmt = new SimpleDateFormat(CAppConsts.DateFmtYmd);
    }
    
    public void copyItem(CEvalItem aitem)
@@ -47,7 +47,7 @@ public class CEvalItem
       recomdate.setTime(aitem.recomdate.getTime());
       overduedate.setTime(aitem.overduedate.getTime());
       
-      if (resultcd.equals(CConsts.ResComplete) || resultcd.equals(CConsts.ResImmune))
+      if (resultcd.equals(CAppConsts.ResComplete) || resultcd.equals(CAppConsts.ResImmune))
       {
          doseord = 0;
          acceldate.setTime(0);

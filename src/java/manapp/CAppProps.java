@@ -16,11 +16,7 @@ public class CAppProps implements Serializable
    public String AppDir = "/missing/";
    public String ConfDir = AppDir + "conf/";
    public String LogDir = AppDir + "logs/";
-   public String DbConfigFile = ConfDir + "appdb.conf";
-   public String RemDbConfigFile = ConfDir + "remappdb.conf";
-   public String AuthDbConfig = ConfDir + "authdb.conf";
    public String ErrorLogFile = LogDir + "apperror.log";
-   public String LoginWarnFile = ConfDir + "appwarn.txt";
    public String UsageLogFile = LogDir + "applog.log";
    public String SaveRemoteInfo = "N";
    
@@ -37,11 +33,7 @@ public class CAppProps implements Serializable
          AppDir = props.getProperty("AppDir");
          ConfDir = AppDir + props.getProperty("ConfDir");
          LogDir = AppDir + props.getProperty("LogDir");
-         DbConfigFile = ConfDir + props.getProperty("DbConfigFile");
-         RemDbConfigFile = ConfDir + props.getProperty("RemDbConfigFile");
-         AuthDbConfig = ConfDir + props.getProperty("AuthDbConfig");
          ErrorLogFile = LogDir + props.getProperty("ErrorLogFile");
-         LoginWarnFile = ConfDir + props.getProperty("LoginWarnFile");
          UsageLogFile = LogDir + props.getProperty("UsageLogFile");
          SaveRemoteInfo = props.getProperty("SaveRemoteInfo");
       }

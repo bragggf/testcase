@@ -27,7 +27,7 @@ public class CUserItem
    public CUserItem()
    {
       userid = "";
-      role = manapp.CConsts.RoleNone;
+      role = manapp.CAppConsts.RoleNone;
       passhash = "";
       pwchangedt = new Date(0L);
       lastfailure = new Date(0L);
@@ -123,12 +123,12 @@ public class CUserItem
    
    public boolean isRoleUser()
    {
-      return(role.equals(manapp.CConsts.RoleAdmin) || role.equals(manapp.CConsts.RoleUser));
+      return(role.equals(manapp.CAppConsts.RoleAdmin) || role.equals(manapp.CAppConsts.RoleUser));
    }
    
    public boolean isRoleAdmin()
    {
-      return(role.equals(manapp.CConsts.RoleAdmin));
+      return(role.equals(manapp.CAppConsts.RoleAdmin));
    }
    
    public void dbUpdateItem(Connection aconn)
@@ -146,7 +146,7 @@ public class CUserItem
       }
       catch (Exception ex)
       {
-         manapp.CLogError.logError(manapp.CConsts.ErrMsgFile, false, "dbUpdateItem error: ", ex);
+         manapp.CLogError.logError(manapp.CAppConsts.ErrorFile, false, "dbUpdateItem error: ", ex);
       }
    }
    
@@ -170,7 +170,7 @@ public class CUserItem
       }
       catch (Exception ex)
       {
-         manapp.CLogError.logError(manapp.CConsts.ErrMsgFile, false, "dbSuccess error: ", ex);
+         manapp.CLogError.logError(manapp.CAppConsts.ErrorFile, false, "dbSuccess error: ", ex);
       }
    }
 
@@ -192,16 +192,16 @@ public class CUserItem
       }
       catch (Exception ex)
       {
-         manapp.CLogError.logError(manapp.CConsts.ErrMsgFile, false, "dbFailure error: ", ex);
+         manapp.CLogError.logError(manapp.CAppConsts.ErrorFile, false, "dbFailure error: ", ex);
       }
    }
    
    public int getFailLocked(Connection aconn)
    {
-      if (numfailures < manapp.CConsts.MaxLoginTries) return(manapp.CConsts.FailLockOpen);
-      if (numfailures >= manapp.CConsts.MaxLoginFails) return(manapp.CConsts.FailLockPerm);
+      if (numfailures < manapp.CAppConsts.MaxLoginTries) return(manapp.CAppConsts.FailLockOpen);
+      if (numfailures >= manapp.CAppConsts.MaxLoginFails) return(manapp.CAppConsts.FailLockPerm);
       Date nowdt = new Date();
-      if ((nowdt.getTime() - lastfailure.getTime()) < manapp.CConsts.FailLockPeriod) return(manapp.CConsts.FailLockTemp);
-      return(manapp.CConsts.FailLockOpen);
+      if ((nowdt.getTime() - lastfailure.getTime()) < manapp.CAppConsts.FailLockPeriod) return(manapp.CAppConsts.FailLockTemp);
+      return(manapp.CAppConsts.FailLockOpen);
    }
 }

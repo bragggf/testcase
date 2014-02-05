@@ -32,12 +32,12 @@ public class CShotItem
    {
       shotid = "";
       shotdate = new Date();
-      vaccinecd = CConsts.TagNoValue;
-      mfrcd = CConsts.TagNoValue;
-      mdyfmt = new SimpleDateFormat(CConsts.DateFmtStr);
+      vaccinecd = CAppConsts.TagNoValue;
+      mfrcd = CAppConsts.TagNoValue;
+      mdyfmt = new SimpleDateFormat(CAppConsts.DateFmtStr);
       
-      reftype = CConsts.TagNoValue;
-      periodtype = CConsts.TagNoValue;
+      reftype = CAppConsts.TagNoValue;
+      periodtype = CAppConsts.TagNoValue;
       periodamt = 0;
       periodoff = 0;
    }
@@ -50,13 +50,13 @@ System.err.println("Reference: " + reftype);
       
      
       Calendar refdt = new GregorianCalendar();
-      if (reftype.equals(CConsts.RefTypeAge)) refdt.setTime(abirth);
+      if (reftype.equals(CAppConsts.RefTypeAge)) refdt.setTime(abirth);
       else refdt.setTime(alast);
 
-      if (periodtype.equals(CConsts.PeriodYears)) refdt.add(Calendar.YEAR, periodamt);
-      if (periodtype.equals(CConsts.PeriodMonths)) refdt.add(Calendar.MONTH, periodamt);
-      if (periodtype.equals(CConsts.PeriodWeeks)) refdt.add(Calendar.DATE, periodamt*7);
-      if (periodtype.equals(CConsts.PeriodDays)) refdt.add(Calendar.DATE, periodamt);
+      if (periodtype.equals(CAppConsts.PeriodYears)) refdt.add(Calendar.YEAR, periodamt);
+      if (periodtype.equals(CAppConsts.PeriodMonths)) refdt.add(Calendar.MONTH, periodamt);
+      if (periodtype.equals(CAppConsts.PeriodWeeks)) refdt.add(Calendar.DATE, periodamt*7);
+      if (periodtype.equals(CAppConsts.PeriodDays)) refdt.add(Calendar.DATE, periodamt);
       refdt.add(Calendar.DATE, periodoff);
       shotdate.setTime(refdt.getTimeInMillis());
       return(refdt.getTime());
@@ -114,7 +114,7 @@ System.err.println("Reference: " + reftype);
    
    public String getYmdStr()
    {
-      SimpleDateFormat ymdfmt = new SimpleDateFormat(CConsts.DateFmtYmd);
+      SimpleDateFormat ymdfmt = new SimpleDateFormat(CAppConsts.DateFmtYmd);
       return(ymdfmt.format(shotdate));
    }
    public String getShotDateStr()
@@ -240,35 +240,35 @@ System.err.println("Reference: " + reftype);
    
    public String makeRefOptions()
    {
-      String retstr = "<option value='"+CConsts.TagNoValue+"'>" + CConsts.TagNoLabel + "</option>\n";
-      retstr = retstr + "<option value='"+CConsts.RefTypeAge+"'";
-      if (reftype.equals(CConsts.RefTypeAge)) retstr = retstr + " SELECTED";
-      retstr = retstr + ">" + CConsts.RefTypeAge + "</option>\n";
-      retstr = retstr + "<option value='"+CConsts.RefTypeInt+"'";
-      if (reftype.equals(CConsts.RefTypeInt)) retstr = retstr + " SELECTED";
-      retstr = retstr + ">" + CConsts.RefTypeInt + "</option>\n";
+      String retstr = "<option value='"+CAppConsts.TagNoValue+"'>" + CAppConsts.TagNoLabel + "</option>\n";
+      retstr = retstr + "<option value='"+CAppConsts.RefTypeAge+"'";
+      if (reftype.equals(CAppConsts.RefTypeAge)) retstr = retstr + " SELECTED";
+      retstr = retstr + ">" + CAppConsts.RefTypeAge + "</option>\n";
+      retstr = retstr + "<option value='"+CAppConsts.RefTypeInt+"'";
+      if (reftype.equals(CAppConsts.RefTypeInt)) retstr = retstr + " SELECTED";
+      retstr = retstr + ">" + CAppConsts.RefTypeInt + "</option>\n";
       return(retstr);      
    }
    
    public String makePeriodOptions()
    {
-      String retstr = "<option value='"+CConsts.TagNoValue+"'>" + CConsts.TagNoLabel + "</option>\n";
+      String retstr = "<option value='"+CAppConsts.TagNoValue+"'>" + CAppConsts.TagNoLabel + "</option>\n";
 
-      retstr = retstr + "<option value='"+CConsts.PeriodDays+"'";
-      if (periodtype.equals(CConsts.PeriodDays)) retstr = retstr + " SELECTED";
-      retstr = retstr + ">" + CConsts.PeriodDays + "</option>\n";
+      retstr = retstr + "<option value='"+CAppConsts.PeriodDays+"'";
+      if (periodtype.equals(CAppConsts.PeriodDays)) retstr = retstr + " SELECTED";
+      retstr = retstr + ">" + CAppConsts.PeriodDays + "</option>\n";
 
-      retstr = retstr + "<option value='"+CConsts.PeriodWeeks+"'";
-      if (periodtype.equals(CConsts.PeriodWeeks)) retstr = retstr + " SELECTED";
-      retstr = retstr + ">" + CConsts.PeriodWeeks + "</option>\n";
+      retstr = retstr + "<option value='"+CAppConsts.PeriodWeeks+"'";
+      if (periodtype.equals(CAppConsts.PeriodWeeks)) retstr = retstr + " SELECTED";
+      retstr = retstr + ">" + CAppConsts.PeriodWeeks + "</option>\n";
 
-      retstr = retstr + "<option value='"+CConsts.PeriodMonths+"'";
-      if (periodtype.equals(CConsts.PeriodMonths)) retstr = retstr + " SELECTED";
-      retstr = retstr + ">" + CConsts.PeriodMonths + "</option>\n";
+      retstr = retstr + "<option value='"+CAppConsts.PeriodMonths+"'";
+      if (periodtype.equals(CAppConsts.PeriodMonths)) retstr = retstr + " SELECTED";
+      retstr = retstr + ">" + CAppConsts.PeriodMonths + "</option>\n";
 
-      retstr = retstr + "<option value='"+CConsts.PeriodYears+"'";
-      if (periodtype.equals(CConsts.PeriodYears)) retstr = retstr + " SELECTED";
-      retstr = retstr + ">" + CConsts.PeriodYears + "</option>\n";
+      retstr = retstr + "<option value='"+CAppConsts.PeriodYears+"'";
+      if (periodtype.equals(CAppConsts.PeriodYears)) retstr = retstr + " SELECTED";
+      retstr = retstr + ">" + CAppConsts.PeriodYears + "</option>\n";
       
       return(retstr);      
    }

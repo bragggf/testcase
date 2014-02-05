@@ -58,7 +58,7 @@ public class CMapCode extends CStringList
       }
       catch (Exception ex)
       {
-         CLogError.logError(CConsts.ErrMsgFile, false, "CMapCode.dbReadList cannot read list. ", ex);
+         CLogError.logError(CAppConsts.ErrorFile, false, "CMapCode.dbReadList cannot read list. ", ex);
       }
    }
    
@@ -76,6 +76,6 @@ public class CMapCode extends CStringList
          CMapItem myitem = (CMapItem) this.getItem(idx);
          if (myitem.mapval.equals(aval)) return(myitem.codeval);
       }
-      return(CConsts.TagNoValue);
+      return(CAppConsts.TagNoValue);
    }
 }

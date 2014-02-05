@@ -11,6 +11,8 @@ import login.*;
 import java.io.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
+import java.sql.Connection;
+import dbconn.CDbConnMan;
 
 /**
  *
@@ -29,8 +31,8 @@ public class DoEdit extends HttpServlet
       HttpSession session = request.getSession(false);
       if (session == null)
       {
-         session.setAttribute("CurrAct", CConsts.LinkLoginPage);
-         RequestDispatcher rd = request.getRequestDispatcher(CConsts.LinkCentral);
+         session.setAttribute("CurrAct", CAppConsts.LinkLoginPage);
+         RequestDispatcher rd = request.getRequestDispatcher(CAppConsts.LinkCentral);
          rd.forward(request, response);
          return;
       }
@@ -39,22 +41,19 @@ public class DoEdit extends HttpServlet
       manapp.CAppProps props = (manapp.CAppProps) session.getAttribute("AppProps");
       if (props == null) 
       {
-         props = new manapp.CAppProps(CConsts.AppPropFile);
+         props = new manapp.CAppProps(CAppConsts.AppPropFile);
          session.setAttribute("AppProps", props);
       }
 
-      manapp.CDbConnect dbconn = (manapp.CDbConnect) session.getAttribute("DbConn");
-      if (dbconn == null) 
-      {
-         dbconn = new manapp.CDbConnect(props.DbConfigFile, props.ErrorLogFile, props.ErrMsgEcho);
-         session.setAttribute("DbConn", dbconn);
-      }
+      ServletContext scontext = this.getServletContext();
+      CDbConnMan dbconnman = (CDbConnMan) scontext.getAttribute("DbConnMan");   
+      
       String btntxt = request.getParameter("BtnAct");
       
       if (btntxt != null && btntxt.equals("Cancel"))
       {
          session.setAttribute("CurrAct", "StatusPage");
-         RequestDispatcher rd = request.getRequestDispatcher(CConsts.LinkCentral);
+         RequestDispatcher rd = request.getRequestDispatcher(CAppConsts.LinkCentral);
          rd.forward(request, response);
          return;
       }      
@@ -65,24 +64,26 @@ public class DoEdit extends HttpServlet
          try
          {
             testcase.updateItem(request);
-            if (CConsts.TagNoValue.equals(testcase.testgroupid))
+            if (CAppConsts.TagNoValue.equals(testcase.testgroupid))
             {
                session.setAttribute("CurrAct", "EditPage");
-               RequestDispatcher rd = request.getRequestDispatcher(CConsts.LinkCentral);
+               RequestDispatcher rd = request.getRequestDispatcher(CAppConsts.LinkCentral);
                rd.forward(request, response);
                return;
             }
-            testcase.dbWriteItem(dbconn.getConnection());
-            testcase.dbWriteDetail(dbconn.getConnection());
+            Connection conn = dbconnman.getConnection(); 
+            testcase.dbWriteItem(conn);
+            testcase.dbWriteDetail(conn);
+            dbconnman.returnConnection(conn);
 
          }
          catch (Exception ex)
          {
-            CLogError.logError(CConsts.ErrMsgFile, false, "CTestItem.updateItem ", ex);
+            CLogError.logError(CAppConsts.ErrorFile, false, "CTestItem.updateItem ", ex);
          }
          
          session.setAttribute("CurrAct", "StatusPage");
-         RequestDispatcher rd = request.getRequestDispatcher(CConsts.LinkCentral);
+         RequestDispatcher rd = request.getRequestDispatcher(CAppConsts.LinkCentral);
          rd.forward(request, response);
          return;
       }      
@@ -93,37 +94,40 @@ public class DoEdit extends HttpServlet
          try
          {
             testcase.updateItem(request);
-            if (CConsts.TagNoValue.equals(testcase.testgroupid))
+            if (CAppConsts.TagNoValue.equals(testcase.testgroupid))
             {
                session.setAttribute("CurrAct", "EditPage");
-               RequestDispatcher rd = request.getRequestDispatcher(CConsts.LinkCentral);
+               RequestDispatcher rd = request.getRequestDispatcher(CAppConsts.LinkCentral);
                rd.forward(request, response);
                return;
             }
-            testcase.dbWriteItem(dbconn.getConnection());
-            testcase.dbWriteDetail(dbconn.getConnection());
+            Connection conn = dbconnman.getConnection(); 
+            testcase.dbWriteItem(conn);
+            testcase.dbWriteDetail(conn);
             
             String oldstr = request.getParameter("HideDate");
             String newstr = request.getParameter("BaseDate");
             if (oldstr == null || oldstr.length() < 8 ||
                 newstr == null || newstr.length() < 8)
             {
+               dbconnman.returnConnection(conn);
                session.setAttribute("CurrAct", "EditPage");
-               RequestDispatcher rd = request.getRequestDispatcher(CConsts.LinkCentral);
+               RequestDispatcher rd = request.getRequestDispatcher(CAppConsts.LinkCentral);
                rd.forward(request, response);
                return;
             }
             testcase.updateBaseDate(oldstr, newstr);
-            testcase.dbWriteItem(dbconn.getConnection());
-            testcase.dbWriteDetail(dbconn.getConnection());
+            testcase.dbWriteItem(conn);
+            testcase.dbWriteDetail(conn);
+            dbconnman.returnConnection(conn);
          }
          catch (Exception ex)
          {
-            CLogError.logError(CConsts.ErrMsgFile, false, "DoEdit Scale ", ex);
+            CLogError.logError(CAppConsts.ErrorFile, false, "DoEdit Scale ", ex);
          }
          
          session.setAttribute("CurrAct", "EditPage");
-         RequestDispatcher rd = request.getRequestDispatcher(CConsts.LinkCentral);
+         RequestDispatcher rd = request.getRequestDispatcher(CAppConsts.LinkCentral);
          rd.forward(request, response);
          return;
       }      
@@ -134,30 +138,32 @@ public class DoEdit extends HttpServlet
          try
          {
             testcase.updateItem(request);
-            if (CConsts.TagNoValue.equals(testcase.testgroupid))
+            if (CAppConsts.TagNoValue.equals(testcase.testgroupid))
             {
                session.setAttribute("CurrAct", "EditPage");
-               RequestDispatcher rd = request.getRequestDispatcher(CConsts.LinkCentral);
+               RequestDispatcher rd = request.getRequestDispatcher(CAppConsts.LinkCentral);
                rd.forward(request, response);
                return;
             }
-            testcase.dbWriteItem(dbconn.getConnection());
-            testcase.dbWriteDetail(dbconn.getConnection());
+            Connection conn = dbconnman.getConnection(); 
+            testcase.dbWriteItem(conn);
+            testcase.dbWriteDetail(conn);
+            dbconnman.returnConnection(conn);
          }
          catch (Exception ex)
          {
-            CLogError.logError(CConsts.ErrMsgFile, false, "DoEdit Calc ", ex);
+            CLogError.logError(CAppConsts.ErrorFile, false, "DoEdit Calc ", ex);
          }
          
          session.setAttribute("CurrAct", "EditPage");
-         RequestDispatcher rd = request.getRequestDispatcher(CConsts.LinkCentral);
+         RequestDispatcher rd = request.getRequestDispatcher(CAppConsts.LinkCentral);
          rd.forward(request, response);
          return;
       }      
       
       // fall through -- return from whence you came
       session.setAttribute("CurrAct", "EditPage");
-      RequestDispatcher rd = request.getRequestDispatcher(CConsts.LinkCentral);
+      RequestDispatcher rd = request.getRequestDispatcher(CAppConsts.LinkCentral);
       rd.forward(request, response);
       return;
    }

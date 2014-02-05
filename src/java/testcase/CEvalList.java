@@ -47,7 +47,7 @@ public class CEvalList extends CStringList
       }
       catch (Exception ex)
       {
-         CLogError.logError(CConsts.ErrMsgFile, false, "CEvalList.dbReadList cannot read list. ", ex);
+         CLogError.logError(CAppConsts.ErrorFile, false, "CEvalList.dbReadList cannot read list. ", ex);
       }
    }
       
@@ -62,7 +62,7 @@ public class CEvalList extends CStringList
       }
       catch (Exception ex)
       {
-         CLogError.logError(CConsts.ErrMsgFile, false, "CEvalList.dbDeleteList cannot delete list. ", ex);
+         CLogError.logError(CAppConsts.ErrorFile, false, "CEvalList.dbDeleteList cannot delete list. ", ex);
       }
    }
    
@@ -95,7 +95,7 @@ public class CEvalList extends CStringList
       }
       catch (Exception ex)
       {
-         CLogError.logError(CConsts.ErrMsgFile, false, "CEvalList.dbWriteList cannot write list. ", ex);
+         CLogError.logError(CAppConsts.ErrorFile, false, "CEvalList.dbWriteList cannot write list. ", ex);
       }
    }
 

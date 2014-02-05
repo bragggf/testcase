@@ -6,11 +6,17 @@
 
 package testcase;
 
+import java.io.IOException;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
+import dbconn.CDbConnMan;
 import manapp.*;
 import login.*;
-import java.io.*;
-import javax.servlet.*;
-import javax.servlet.http.*;
 
 /** central dispatch servlet */
 public class DoTestCase extends HttpServlet
@@ -33,7 +39,7 @@ public class DoTestCase extends HttpServlet
             return;
          }
          response.reset();
-         RequestDispatcher rd = request.getRequestDispatcher(CConsts.LinkLoginPage + ".jsp");
+         RequestDispatcher rd = request.getRequestDispatcher(CAppConsts.LinkLoginPage + ".jsp");
          rd.forward(request, response);
          return;
       }      
@@ -53,16 +59,16 @@ public class DoTestCase extends HttpServlet
          return;
       }
 
-      if (curract.equals(CConsts.LinkLoginPage))
+      if (curract.equals(CAppConsts.LinkLoginPage))
       {
-         RequestDispatcher rd = request.getRequestDispatcher(CConsts.LinkLoginPage + ".jsp");
+         RequestDispatcher rd = request.getRequestDispatcher(CAppConsts.LinkLoginPage + ".jsp");
          rd.forward(request, response);
          return;
       }
 
-      if (curract.equals(CConsts.LinkLoginFailure))
+      if (curract.equals(CAppConsts.LinkLoginFailure))
       {
-         RequestDispatcher rd = request.getRequestDispatcher(CConsts.LinkLoginFailure + ".jsp");
+         RequestDispatcher rd = request.getRequestDispatcher(CAppConsts.LinkLoginFailure + ".jsp");
          rd.forward(request, response);
          return;
       }
@@ -70,14 +76,28 @@ public class DoTestCase extends HttpServlet
       CUserItem myuser = (CUserItem) session.getAttribute("UserItem");
       if (myuser == null)
       {
-         RequestDispatcher rd = request.getRequestDispatcher(CConsts.LinkLoginPage + ".jsp");
+         RequestDispatcher rd = request.getRequestDispatcher(CAppConsts.LinkLoginPage + ".jsp");
          rd.forward(request, response);
          return;
       }
 
-      if (curract.equals(CConsts.LinkLoginSuccess))
+      if (curract.equals(manapp.CAppConsts.LinkPassChange))
       {
-         RequestDispatcher rd = request.getRequestDispatcher(CConsts.LinkLoginSuccess + ".jsp");
+         RequestDispatcher rqd = request.getRequestDispatcher(manapp.CAppConsts.LinkPassChange + ".jsp");
+         rqd.forward(request, response);
+         return;
+      }
+
+      if (curract.equals("DoSetpw"))
+      {
+         RequestDispatcher rqd = request.getRequestDispatcher("DoSetpw");
+         rqd.forward(request, response);
+         return;
+      }
+
+      if (curract.equals(CAppConsts.LinkLoginSuccess))
+      {
+         RequestDispatcher rd = request.getRequestDispatcher(CAppConsts.LinkLoginSuccess + ".jsp");
          rd.forward(request, response);
          return;
       }
@@ -124,6 +144,30 @@ public class DoTestCase extends HttpServlet
          return;
       }      
    }
+   
+   public void init() throws ServletException
+   {
+      // create the connection pool manager
+      dbconn.CDbProps props = new dbconn.CDbProps();
+      CDbConnMan dbconnman = new CDbConnMan(props.DbConfigFile, props.ErrorLogFile); 
+      ServletContext scontext = this.getServletContext();
+      scontext.setAttribute("DbConnMan", dbconnman);
+      
+      CDbConnMan remconnman = new CDbConnMan(props.RemConfigFile, props.ErrorLogFile); 
+      scontext.setAttribute("RemConnMan", remconnman);
+   }
+   
+   public void destroy()
+   {
+      ServletContext scontext = this.getServletContext();
+      CDbConnMan dbconnman = (CDbConnMan) scontext.getAttribute("DbConnMan"); 
+      dbconnman.shutdown();
+      scontext.removeAttribute("DbConnMan");
+      
+      CDbConnMan actconnman = (CDbConnMan) scontext.getAttribute("ActConnMan"); 
+      actconnman.shutdown();
+      scontext.removeAttribute("ActConnMan");
+   }
   
    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
    /** Handles the HTTP <code>GET</code> method.
@@ -144,13 +188,6 @@ public class DoTestCase extends HttpServlet
    throws ServletException, IOException
    {
       processRequest(request, response);
-   }
-   
-   /** Returns a short description of the servlet.
-    */
-   public String getServletInfo()
-   {
-      return "Short description";
    }
    // </editor-fold>
 }

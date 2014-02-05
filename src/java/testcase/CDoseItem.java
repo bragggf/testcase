@@ -27,14 +27,14 @@ public class CDoseItem
    public CDoseItem()
    {
       doseid = "";
-      seriescd = CConsts.TagNoValue;
-      resultcd = CConsts.TagNoValue;
+      seriescd = CAppConsts.TagNoValue;
+      resultcd = CAppConsts.TagNoValue;
       doseord = 0;
       acceldate = new Date(0);
       recomdate = new Date(0);
       overduedate = new Date(0);
-      testresult = CConsts.StatusNone;
-      dtfmt = new SimpleDateFormat(CConsts.DateFmtStr);
+      testresult = CAppConsts.StatusNone;
+      dtfmt = new SimpleDateFormat(CAppConsts.DateFmtStr);
    }
    
    public String getAccelDateStr()
@@ -84,50 +84,50 @@ public class CDoseItem
    
    public void setTestResult(CEvalItem aitem)
    {
-      this.testresult = CConsts.StatusNone;
+      this.testresult = CAppConsts.StatusNone;
 
-      if (aitem.resultcd.equals(this.resultcd) && this.resultcd.equals(CConsts.ResComplete))
+      if (aitem.resultcd.equals(this.resultcd) && this.resultcd.equals(CAppConsts.ResComplete))
       {
-         this.testresult = CConsts.StatusPass;
+         this.testresult = CAppConsts.StatusPass;
          return;
       }
 
-      if (aitem.resultcd.equals(this.resultcd) && this.resultcd.equals(CConsts.ResImmune))
+      if (aitem.resultcd.equals(this.resultcd) && this.resultcd.equals(CAppConsts.ResImmune))
       {
-         this.testresult = CConsts.StatusPass;
+         this.testresult = CAppConsts.StatusPass;
          return;
       }
 
       if (!aitem.resultcd.equals(this.resultcd))
       {
-         this.testresult = CConsts.StatusFail;
+         this.testresult = CAppConsts.StatusFail;
          return;
       }
       
       if (aitem.doseord != this.doseord)
       {
-         this.testresult = CConsts.StatusFail;
+         this.testresult = CAppConsts.StatusFail;
          return;
       }
       
       if (aitem.acceldate.getTime() != this.acceldate.getTime())
       {
-         this.testresult = CConsts.StatusFail;
+         this.testresult = CAppConsts.StatusFail;
          return;
       }
       
       if (aitem.recomdate.getTime() != this.recomdate.getTime())
       {
-         this.testresult = CConsts.StatusFail;
+         this.testresult = CAppConsts.StatusFail;
          return;
       }
       
       if (aitem.overduedate.getTime() != this.overduedate.getTime())
       {
-         this.testresult = CConsts.StatusFail;
+         this.testresult = CAppConsts.StatusFail;
          return;
       }
       
-      this.testresult = CConsts.StatusPass;
+      this.testresult = CAppConsts.StatusPass;
    }
 }

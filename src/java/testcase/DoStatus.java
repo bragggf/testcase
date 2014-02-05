@@ -6,11 +6,14 @@
 
 package testcase;
 
-import manapp.*;
-import login.*;
 import java.io.*;
+import java.sql.Connection;
 import javax.servlet.*;
 import javax.servlet.http.*;
+
+import manapp.*;
+import login.*;
+import dbconn.CDbConnMan;
 
 /**
  *
@@ -29,8 +32,8 @@ public class DoStatus extends HttpServlet
       HttpSession session = request.getSession(false);
       if (session == null)
       {
-         session.setAttribute("CurrAct", CConsts.LinkLoginPage);
-         RequestDispatcher rd = request.getRequestDispatcher(CConsts.LinkCentral);
+         session.setAttribute("CurrAct", CAppConsts.LinkLoginPage);
+         RequestDispatcher rd = request.getRequestDispatcher(CAppConsts.LinkCentral);
          rd.forward(request, response);
          return;
       }
@@ -39,38 +42,34 @@ public class DoStatus extends HttpServlet
       manapp.CAppProps props = (manapp.CAppProps) session.getAttribute("AppProps");
       if (props == null) 
       {
-         props = new manapp.CAppProps(CConsts.AppPropFile);
+         props = new manapp.CAppProps(CAppConsts.AppPropFile);
          session.setAttribute("AppProps", props);
       }
 
-      manapp.CDbConnect dbconn = (manapp.CDbConnect) session.getAttribute("DbConn");
-      if (dbconn == null) 
-      {
-         dbconn = new manapp.CDbConnect(props.DbConfigFile, props.ErrorLogFile, props.ErrMsgEcho);
-         session.setAttribute("DbConn", dbconn);
-      }
+      ServletContext scontext = this.getServletContext();
+      CDbConnMan dbconnman = (CDbConnMan) scontext.getAttribute("DbConnMan");   
+      CDbConnMan remconnman = (CDbConnMan) scontext.getAttribute("RemConnMan");   
+      
       String btntxt = request.getParameter("BtnAct");
       
       if (btntxt != null && btntxt.equals("LogOff"))
       {
-         dbconn.shutDown();
-         session.removeAttribute("DbConn");
          session.removeAttribute("UserItem");
          session.removeAttribute("CurTestGroup");
          session.invalidate();
-         RequestDispatcher rd = request.getRequestDispatcher(CConsts.LinkCentral);
+         RequestDispatcher rd = request.getRequestDispatcher(CAppConsts.LinkCentral);
          rd.forward(request, response);
          return;  
       }      
 
       String mytestgrp = request.getParameter("TestGroup");
-      if (mytestgrp == null) mytestgrp = CConsts.TagNoValue;
+      if (mytestgrp == null) mytestgrp = CAppConsts.TagNoValue;
       session.setAttribute("CurTestGroup", mytestgrp);
       
       if (btntxt != null && btntxt.equals("ChangeTestGroup"))
       {
          session.setAttribute("CurrAct", "StatusPage");
-         RequestDispatcher rd = request.getRequestDispatcher(CConsts.LinkCentral);
+         RequestDispatcher rd = request.getRequestDispatcher(CAppConsts.LinkCentral);
          rd.forward(request, response);
          return;
       }      
@@ -78,13 +77,15 @@ public class DoStatus extends HttpServlet
       if (btntxt != null && btntxt.equals("Status"))
       {
          session.setAttribute("CurrAct", "StatusPage");
-         RequestDispatcher rd = request.getRequestDispatcher(CConsts.LinkCentral);
+         RequestDispatcher rd = request.getRequestDispatcher(CAppConsts.LinkCentral);
          rd.forward(request, response);
          return;
       }      
       
       CTestList testlist = new CTestList();
-      testlist.dbReadList(dbconn.getConnection(), mytestgrp);
+      Connection conn = dbconnman.getConnection(); 
+      testlist.dbReadList(conn, mytestgrp);
+      dbconnman.returnConnection(conn);
       
       if (btntxt != null && btntxt.equals("Create"))
       {
@@ -96,7 +97,7 @@ public class DoStatus extends HttpServlet
          testitem.createby = myuser.getUserId();
          session.setAttribute("TestCase", testitem);
          session.setAttribute("CurrAct", "EditPage");
-         RequestDispatcher rd = request.getRequestDispatcher(CConsts.LinkCentral);
+         RequestDispatcher rd = request.getRequestDispatcher(CAppConsts.LinkCentral);
          rd.forward(request, response);
          return;
       }      
@@ -108,7 +109,7 @@ public class DoStatus extends HttpServlet
          CTestItem testitem = (CTestItem) testlist.getObject(mykey);
          session.setAttribute("TestCase", testitem);
          session.setAttribute("CurrAct", "EditPage");
-         RequestDispatcher rd = request.getRequestDispatcher(CConsts.LinkCentral);
+         RequestDispatcher rd = request.getRequestDispatcher(CAppConsts.LinkCentral);
          rd.forward(request, response);
          return;
       }      
@@ -120,7 +121,7 @@ public class DoStatus extends HttpServlet
          CTestItem testitem = (CTestItem) testlist.getObject(mykey);
          session.setAttribute("TestCase", testitem);
          session.setAttribute("CurrAct", "DisplayPage");
-         RequestDispatcher rd = request.getRequestDispatcher(CConsts.LinkCentral);
+         RequestDispatcher rd = request.getRequestDispatcher(CAppConsts.LinkCentral);
          rd.forward(request, response);
          return;
       }      
@@ -130,15 +131,18 @@ public class DoStatus extends HttpServlet
          String mytestid = btntxt.substring(7);
          String mykey = mytestgrp + "|" + mytestid;
          CTestItem testitem = (CTestItem) testlist.getObject(mykey);
-         testitem.testresult = CConsts.StatusSent;
-         testitem.dbWriteItem(dbconn.getConnection());
+         testitem.testresult = CAppConsts.StatusSent;
          
-         Thread runtest = new CRunTest(props, mytestgrp, mytestid);
+         conn = dbconnman.getConnection(); 
+         testitem.dbWriteItem(conn);
+         dbconnman.returnConnection(conn);
+         
+         Thread runtest = new CRunTest(props, dbconnman, remconnman, mytestgrp, mytestid);
          runtest.setPriority(Thread.MIN_PRIORITY);
          runtest.start();
         
          session.setAttribute("CurrAct", "StatusPage");
-         RequestDispatcher rd = request.getRequestDispatcher(CConsts.LinkCentral);
+         RequestDispatcher rd = request.getRequestDispatcher(CAppConsts.LinkCentral);
          rd.forward(request, response);
          return;
       }      
@@ -148,16 +152,18 @@ public class DoStatus extends HttpServlet
          for (int idx = 0; idx < testlist.getCount(); idx++)
          {
             CTestItem testitem = (CTestItem) testlist.getItem(idx);
-            testitem.testresult = CConsts.StatusSent;
-            testitem.dbWriteItem(dbconn.getConnection());
+            testitem.testresult = CAppConsts.StatusSent;
+            conn = dbconnman.getConnection(); 
+            testitem.dbWriteItem(conn);
+            dbconnman.returnConnection(conn);
          }
          
-         Thread runtest = new CRunTest(props, mytestgrp, CConsts.TagNoValue);
+         Thread runtest = new CRunTest(props, dbconnman, remconnman, mytestgrp, CAppConsts.TagNoValue);
          runtest.setPriority(Thread.MIN_PRIORITY);
          runtest.start();
          
          session.setAttribute("CurrAct", "StatusPage");
-         RequestDispatcher rd = request.getRequestDispatcher(CConsts.LinkCentral);
+         RequestDispatcher rd = request.getRequestDispatcher(CAppConsts.LinkCentral);
          rd.forward(request, response);
          return;
       }      
@@ -165,14 +171,14 @@ public class DoStatus extends HttpServlet
       if (btntxt != null && btntxt.startsWith("Summary"))
       {
          session.setAttribute("CurrAct", "SummaryPage");
-         RequestDispatcher rd = request.getRequestDispatcher(CConsts.LinkCentral);
+         RequestDispatcher rd = request.getRequestDispatcher(CAppConsts.LinkCentral);
          rd.forward(request, response);
          return;
       }      
 
       // fall through -- return from whence you came
       session.setAttribute("CurrAct", "StatusPage");
-      RequestDispatcher rd = request.getRequestDispatcher(CConsts.LinkCentral);
+      RequestDispatcher rd = request.getRequestDispatcher(CAppConsts.LinkCentral);
       rd.forward(request, response);
    }
    

@@ -50,7 +50,7 @@ public class CDoseList extends CStringList
       }
       catch (Exception ex)
       {
-         CLogError.logError(CConsts.ErrMsgFile, false, "CDoseList.dbReadList cannot read list. ", ex);
+         CLogError.logError(CAppConsts.ErrorFile, false, "CDoseList.dbReadList cannot read list. ", ex);
       }
    }
       
@@ -65,7 +65,7 @@ public class CDoseList extends CStringList
       }
       catch (Exception ex)
       {
-         CLogError.logError(CConsts.ErrMsgFile, false, "CDoseList.dbDeleteList cannot delete list. ", ex);
+         CLogError.logError(CAppConsts.ErrorFile, false, "CDoseList.dbDeleteList cannot delete list. ", ex);
       }
    }
    
@@ -100,7 +100,7 @@ public class CDoseList extends CStringList
       }
       catch (Exception ex)
       {
-         CLogError.logError(CConsts.ErrMsgFile, false, "CDoseList.dbWriteList cannot write list. ", ex);
+         CLogError.logError(CAppConsts.ErrorFile, false, "CDoseList.dbWriteList cannot write list. ", ex);
       }
    }
 
@@ -146,35 +146,35 @@ public class CDoseList extends CStringList
          retstr = retstr + "<td class='edits'>" +
                "<label class='hidden' for='"+serid+"'>Series " + Integer.toString(icnt) + "</label>" +
                "<select name='"+serid+"' id='"+serid+"' size=1>\n";
-         retstr = retstr + "<option value='"+CConsts.TagNoValue+"'>" + CConsts.TagNoLabel + "</option>\n";
+         retstr = retstr + "<option value='"+CAppConsts.TagNoValue+"'>" + CAppConsts.TagNoLabel + "</option>\n";
          retstr = retstr + series.makeOptions(myitem.seriescd);
          retstr = retstr + "</select></td>\n";
          retstr = retstr + "<td class='edits'>" +
                "<label class='hidden' for='"+resid+"'>Result " + Integer.toString(icnt) + "</label>" +
                "<select name='"+resid+"' id='"+resid+"' size=1>\n";
-         retstr = retstr + "<option value='"+CConsts.TagNoValue+"'>" + CConsts.TagNoLabel + "</option>\n";
+         retstr = retstr + "<option value='"+CAppConsts.TagNoValue+"'>" + CAppConsts.TagNoLabel + "</option>\n";
          retstr = retstr + results.makeOptions(myitem.resultcd);
          retstr = retstr + "</select></td>\n";
          retstr = retstr + "<td class='edits'>" +
                "<label class='hidden' for='"+dosid+"'>Dose " + Integer.toString(icnt) + "</label>" +
                "<input type='text' name='"+dosid+"' id='"+dosid+"' size=4" +
-               " maxlength=" + Integer.toString(CConsts.MaxLenDoseNum) + " value='" + Integer.toString(myitem.doseord) + "'></td>\n";
+               " maxlength=" + Integer.toString(CAppConsts.MaxLenDoseNum) + " value='" + Integer.toString(myitem.doseord) + "'></td>\n";
          retstr = retstr + "<td class='edits'>" +
                "<label class='hidden' for='"+accid+"'>Accelerated date " + Integer.toString(icnt) + "</label>" +
                "<input type='text' name='"+accid+"' id='"+accid+"' size=8" +
-               " maxlength=" + Integer.toString(CConsts.MaxLenDate) + " value='" + myitem.getAccelDateStr() + "'></td>\n";
+               " maxlength=" + Integer.toString(CAppConsts.MaxLenDate) + " value='" + myitem.getAccelDateStr() + "'></td>\n";
          retstr = retstr + "<td class='edits'>" +
                "<label class='hidden' for='"+recid+"'>Recommended date " + Integer.toString(icnt) + "</label>" +
                "<input type='text' name='"+recid+"' id='"+recid+"' size=8" +
-               " maxlength=" + Integer.toString(CConsts.MaxLenDate) + " value='" + myitem.getRecomDateStr() + "'></td>\n";
+               " maxlength=" + Integer.toString(CAppConsts.MaxLenDate) + " value='" + myitem.getRecomDateStr() + "'></td>\n";
          retstr = retstr + "<td class='edits'>" +
                "<label class='hidden' for='"+ovrid+"'>Overdue date " + Integer.toString(icnt) + "</label>" +
                "<input type='text' name='"+ovrid+"' id='"+ovrid+"' size=8" +
-               " maxlength=" + Integer.toString(CConsts.MaxLenDate) + " value='" + myitem.getOverdueDateStr() + "'></td>\n";
+               " maxlength=" + Integer.toString(CAppConsts.MaxLenDate) + " value='" + myitem.getOverdueDateStr() + "'></td>\n";
          retstr = retstr + "</tr>\n";
       }      
       
-      int nslot = Math.max(CConsts.NewSlotAntEval, CConsts.NumSlotAntEval - getCount());
+      int nslot = Math.max(CAppConsts.NewSlotAntEval, CAppConsts.NumSlotAntEval - getCount());
       for (int idx = 0; idx < nslot; idx++)
       {
          icnt++;
@@ -190,31 +190,31 @@ public class CDoseList extends CStringList
          retstr = retstr + "<td class='edits'>" +
                "<label class='hidden' for='"+serid+"'>Series " + Integer.toString(icnt) + "</label>" +
                "<select name='"+serid+"' id='"+serid+"' size=1>\n";
-         retstr = retstr + "<option value='"+CConsts.TagNoValue+"'>" + CConsts.TagNoLabel + "</option>\n";
-         retstr = retstr + series.makeOptions(CConsts.TagNoValue);
+         retstr = retstr + "<option value='"+CAppConsts.TagNoValue+"'>" + CAppConsts.TagNoLabel + "</option>\n";
+         retstr = retstr + series.makeOptions(CAppConsts.TagNoValue);
          retstr = retstr + "</select></td>\n";
          retstr = retstr + "<td class='edits'>" +
                "<label class='hidden' for='"+resid+"'>Result " + Integer.toString(icnt) + "</label>" +
                "<select name='"+resid+"' id='"+resid+"' size=1>\n";
-         retstr = retstr + "<option value='"+CConsts.TagNoValue+"'>" + CConsts.TagNoLabel + "</option>\n";
-         retstr = retstr + results.makeOptions(CConsts.TagNoValue);
+         retstr = retstr + "<option value='"+CAppConsts.TagNoValue+"'>" + CAppConsts.TagNoLabel + "</option>\n";
+         retstr = retstr + results.makeOptions(CAppConsts.TagNoValue);
          retstr = retstr + "</select></td>\n";
          retstr = retstr + "<td class='edits'>" +
                "<label class='hidden' for='"+dosid+"'>Dose " + Integer.toString(icnt) + "</label>" +
                "<input type='text' name='"+dosid+"' id='"+dosid+"' size=4" +
-               " maxlength=" + Integer.toString(CConsts.MaxLenDoseNum) + " value=''></td>\n";
+               " maxlength=" + Integer.toString(CAppConsts.MaxLenDoseNum) + " value=''></td>\n";
          retstr = retstr + "<td class='edits'>" +
                "<label class='hidden' for='"+accid+"'>Accelerated date " + Integer.toString(icnt) + "</label>" +
                "<input type='text' name='"+accid+"' id='"+accid+"' size=8" +
-               " maxlength=" + Integer.toString(CConsts.MaxLenDate) + " value=''></td>\n";
+               " maxlength=" + Integer.toString(CAppConsts.MaxLenDate) + " value=''></td>\n";
          retstr = retstr + "<td class='edits'>" +
                "<label class='hidden' for='"+recid+"'>Recommended date " + Integer.toString(icnt) + "</label>" +
                "<input type='text' name='"+recid+"' id='"+recid+"' size=8" +
-               " maxlength=" + Integer.toString(CConsts.MaxLenDate) + " value=''></td>\n";
+               " maxlength=" + Integer.toString(CAppConsts.MaxLenDate) + " value=''></td>\n";
          retstr = retstr + "<td class='edits'>" +
                "<label class='hidden' for='"+ovrid+"'>Overdue date " + Integer.toString(icnt) + "</label>" +
                "<input type='text' name='"+ovrid+"' id='"+ovrid+"' size=8" +
-               " maxlength=" + Integer.toString(CConsts.MaxLenDate) + " value=''></td>\n";
+               " maxlength=" + Integer.toString(CAppConsts.MaxLenDate) + " value=''></td>\n";
          retstr = retstr + "</tr>\n";
       }         
 
@@ -237,21 +237,21 @@ public class CDoseList extends CStringList
             String ovrid = "Over" + myitem.doseid;
             
             String serstr = arequest.getParameter(serid);
-            if (serstr == null || serstr.equals(CConsts.TagNoValue))
+            if (serstr == null || serstr.equals(CAppConsts.TagNoValue))
             {
                this.delItem(idx);
                continue;
             }
             String resstr = arequest.getParameter(resid);
-            if (resstr == null || resstr.equals(CConsts.TagNoValue))
+            if (resstr == null || resstr.equals(CAppConsts.TagNoValue))
             {
                this.delItem(idx);
                continue;
             }
-            String dosstr = CParser.truncStr(arequest.getParameter(dosid), CConsts.MaxLenDoseNum);
-            String accstr = CParser.truncStr(arequest.getParameter(accid), CConsts.MaxLenDate);
-            String recstr = CParser.truncStr(arequest.getParameter(recid), CConsts.MaxLenDate);
-            String ovrstr = CParser.truncStr(arequest.getParameter(ovrid), CConsts.MaxLenDate);
+            String dosstr = CParser.truncStr(arequest.getParameter(dosid), CAppConsts.MaxLenDoseNum);
+            String accstr = CParser.truncStr(arequest.getParameter(accid), CAppConsts.MaxLenDate);
+            String recstr = CParser.truncStr(arequest.getParameter(recid), CAppConsts.MaxLenDate);
+            String ovrstr = CParser.truncStr(arequest.getParameter(ovrid), CAppConsts.MaxLenDate);
 
             myitem.seriescd = serstr;
             myitem.resultcd = resstr;
@@ -265,7 +265,7 @@ public class CDoseList extends CStringList
             else myitem.setOverdueDate(ovrstr);
          }
          
-         int nslot = Math.max(CConsts.NewSlotAntEval, CConsts.NumSlotAntEval - getCount());
+         int nslot = Math.max(CAppConsts.NewSlotAntEval, CAppConsts.NumSlotAntEval - getCount());
          for (int idx = 0; idx < nslot; idx++)
          {
             CDoseItem myitem = new CDoseItem();
@@ -278,13 +278,13 @@ public class CDoseList extends CStringList
             String ovrid = "Over" + myid;
             
             String serstr = arequest.getParameter(serid);
-            if (serstr == null || serstr.equals(CConsts.TagNoValue)) continue;
+            if (serstr == null || serstr.equals(CAppConsts.TagNoValue)) continue;
             String resstr = arequest.getParameter(resid);
-            if (resstr == null || resstr.equals(CConsts.TagNoValue)) continue;
-            String dosstr = CParser.truncStr(arequest.getParameter(dosid), CConsts.MaxLenDoseNum);
-            String accstr = CParser.truncStr(arequest.getParameter(accid), CConsts.MaxLenDate);
-            String recstr = CParser.truncStr(arequest.getParameter(recid), CConsts.MaxLenDate);
-            String ovrstr = CParser.truncStr(arequest.getParameter(ovrid), CConsts.MaxLenDate);
+            if (resstr == null || resstr.equals(CAppConsts.TagNoValue)) continue;
+            String dosstr = CParser.truncStr(arequest.getParameter(dosid), CAppConsts.MaxLenDoseNum);
+            String accstr = CParser.truncStr(arequest.getParameter(accid), CAppConsts.MaxLenDate);
+            String recstr = CParser.truncStr(arequest.getParameter(recid), CAppConsts.MaxLenDate);
+            String ovrstr = CParser.truncStr(arequest.getParameter(ovrid), CAppConsts.MaxLenDate);
             
             myitem.doseid = this.makeNewId("dos", 6);
             myitem.seriescd = serstr;
@@ -302,7 +302,7 @@ public class CDoseList extends CStringList
       }
       catch (Exception ex)
       {
-         CLogError.logError(CConsts.ErrMsgFile, false, "CDoseList.updateItem ", ex);
+         CLogError.logError(CAppConsts.ErrorFile, false, "CDoseList.updateItem ", ex);
          throw(ex);
       }
    }
@@ -371,20 +371,20 @@ public class CDoseList extends CStringList
       for (int idx = 0; idx < this.getCount(); idx++)
       {
          CDoseItem myitem = (CDoseItem) this.getItem(idx);
-         myitem.testresult = CConsts.StatusNone;
+         myitem.testresult = CAppConsts.StatusNone;
       }
    }
    
    public String getTestStatus()
    {
-      String mystat = CConsts.StatusNone;
+      String mystat = CAppConsts.StatusNone;
       for (int idx = 0; idx < this.getCount(); idx++)
       {
          CDoseItem myitem = (CDoseItem) this.getItem(idx);
-         if (CConsts.StatusFail.equals(myitem.testresult))
-            return(CConsts.StatusFail);
-         else if (CConsts.StatusNone.equals(myitem.testresult))
-            return(CConsts.StatusNone);
+         if (CAppConsts.StatusFail.equals(myitem.testresult))
+            return(CAppConsts.StatusFail);
+         else if (CAppConsts.StatusNone.equals(myitem.testresult))
+            return(CAppConsts.StatusNone);
          mystat = myitem.testresult;
       }
       return(mystat);

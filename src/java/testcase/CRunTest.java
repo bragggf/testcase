@@ -9,6 +9,8 @@ package testcase;
 import manapp.*;
 import java.sql.*;
 import java.text.*;
+import java.sql.Connection;
+import dbconn.CDbConnMan;
 
 /** run test cases in a thread */
 public class CRunTest extends Thread
@@ -16,11 +18,15 @@ public class CRunTest extends Thread
    private String testgrpid;
    private String testid;
    private CAppProps props;
+   private CDbConnMan locconnman;
+   private CDbConnMan remconnman;           
    
    /** Creates a new instance of CRunTest */
-   public CRunTest(CAppProps aprops, String agroup, String atest)
+   public CRunTest(CAppProps aprops, CDbConnMan alocman, CDbConnMan aremman, String agroup, String atest)
    {
       super();
+      locconnman = alocman;
+      remconnman = aremman;       
       props = aprops;
       testgrpid = agroup;
       testid = atest;
@@ -28,13 +34,11 @@ public class CRunTest extends Thread
    
    public void run()
    {
-      CDbConnect locdbconn = new CDbConnect(props.DbConfigFile, props.ErrorLogFile, props.ErrMsgEcho); 
-      Connection locconn = locdbconn.getConnection();
-      CDbConnect remdbconn = new CDbConnect(props.RemDbConfigFile, props.ErrorLogFile, props.ErrMsgEcho);
-      Connection remconn = remdbconn.getConnection();
+      Connection locconn = locconnman.getConnection(); ;
+      Connection remconn = remconnman.getConnection(); ;
 
       CTestList testlist = new CTestList();
-      if (testid.equals(CConsts.TagNoValue))
+      if (testid.equals(CAppConsts.TagNoValue))
       {
          testlist.dbReadList(locconn, testgrpid);
       }
@@ -75,13 +79,13 @@ public class CRunTest extends Thread
          }
          
          cstmt.close();
-         remdbconn.shutDown();
-         locdbconn.shutDown();
       }
       catch (Exception ex)
       {
          CLogError.logError(props.ErrorLogFile, props.ErrMsgEcho, "CRunTest.run error: ", ex);
       }
+      locconnman.returnConnection(locconn);
+      remconnman.returnConnection(remconn);
    }
    
    public void runTestProc(Connection aconn, CTestItem atestcase, int atnum, CallableStatement acstmt)
@@ -139,7 +143,7 @@ System.err.println("pi_waiver_str => " + waivstr);
    protected void saveSeriesResult(Connection aconn, CTestItem atestcase, String astr) throws Exception
    {
       if (astr == null || astr.length() == 0) return;
-      SimpleDateFormat ymdfmt = new SimpleDateFormat(CConsts.DateFmtYmd);
+      SimpleDateFormat ymdfmt = new SimpleDateFormat(CAppConsts.DateFmtYmd);
       CMapCode seriesmap = new CMapCode(aconn, "SeriesTbl", "SeriesCd", "SeriesId", CMapCode.TypeInteger);
       CEvalList evallist = new CEvalList();
       CEvalItem evalitem = null;

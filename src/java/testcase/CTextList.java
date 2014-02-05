@@ -45,7 +45,7 @@ public class CTextList extends CStringList
       }
       catch (Exception ex)
       {
-         CLogError.logError(CConsts.ErrMsgFile, false, "CTextList.dbReadList cannot read list. ", ex);
+         CLogError.logError(CAppConsts.ErrorFile, false, "CTextList.dbReadList cannot read list. ", ex);
       }
    }
       
@@ -60,7 +60,7 @@ public class CTextList extends CStringList
       }
       catch (Exception ex)
       {
-         CLogError.logError(CConsts.ErrMsgFile, false, "CTextList.dbDeleteList cannot delete list. ", ex);
+         CLogError.logError(CAppConsts.ErrorFile, false, "CTextList.dbDeleteList cannot delete list. ", ex);
       }
    }
    
@@ -89,7 +89,7 @@ public class CTextList extends CStringList
       }
       catch (Exception ex)
       {
-         CLogError.logError(CConsts.ErrMsgFile, false, "CTextList.dbWriteList cannot write list. ", ex);
+         CLogError.logError(CAppConsts.ErrorFile, false, "CTextList.dbWriteList cannot write list. ", ex);
       }
    }
 
@@ -113,11 +113,11 @@ public class CTextList extends CStringList
          retstr = retstr + "<td class='edits'>" +
                "<label class='hidden' for='"+txtid+"'>Expected Result " + Integer.toString(icnt) + "</label>" +
                "<input type='text' name='"+txtid+"' id='"+txtid+"' size=45" +
-               " maxlength=" + Integer.toString(CConsts.MaxLenExpectTxt) + " value='" + myitem.expecttxt + "'></td>\n";
+               " maxlength=" + Integer.toString(CAppConsts.MaxLenExpectTxt) + " value='" + myitem.expecttxt + "'></td>\n";
          retstr = retstr + "<td class='edits'>" +
                "<label class='hidden' for='"+resid+"'>Result Note " + Integer.toString(icnt) + "</label>" +
                "<input type='text' name='"+resid+"' id='"+resid+"' size=45" +
-               " maxlength=" + Integer.toString(CConsts.MaxLenExpectTxt) + " value='" + myitem.resulttxt + "'></td>\n";
+               " maxlength=" + Integer.toString(CAppConsts.MaxLenExpectTxt) + " value='" + myitem.resulttxt + "'></td>\n";
          retstr = retstr + "</tr>\n";
       }      
       
@@ -133,11 +133,11 @@ public class CTextList extends CStringList
          retstr = retstr + "<td class='edits'>" +
                "<label class='hidden' for='"+txtid+"'>Expected Result " + Integer.toString(icnt) + "</label>" +
                "<input type='text' name='"+txtid+"' id='"+txtid+"' size=45" +
-               " maxlength=" + Integer.toString(CConsts.MaxLenExpectTxt) + " value=''></td>\n";
+               " maxlength=" + Integer.toString(CAppConsts.MaxLenExpectTxt) + " value=''></td>\n";
          retstr = retstr + "<td class='edits'>" +
                "<label class='hidden' for='"+resid+"'>Result Note " + Integer.toString(icnt) + "</label>" +
                "<input type='text' name='"+resid+"' id='"+resid+"' size=45" +
-               " maxlength=" + Integer.toString(CConsts.MaxLenExpectTxt) + " value=''></td>\n";
+               " maxlength=" + Integer.toString(CAppConsts.MaxLenExpectTxt) + " value=''></td>\n";
          retstr = retstr + "</tr>\n";
       }
       retstr = retstr + "</table></dd>\n";
@@ -152,13 +152,13 @@ public class CTextList extends CStringList
          String txtid = "ExpText" + myitem.expectid;
          String resid = "ResText" + myitem.expectid;
          
-         String expstr = CParser.truncStr(arequest.getParameter(txtid), CConsts.MaxLenExpectTxt);
+         String expstr = CParser.truncStr(arequest.getParameter(txtid), CAppConsts.MaxLenExpectTxt);
          if (expstr == null || expstr.length() == 0) 
          {
             this.delItem(idx);
             continue;
          }
-         String resstr = CParser.truncStr(arequest.getParameter(resid), CConsts.MaxLenExpectTxt);
+         String resstr = CParser.truncStr(arequest.getParameter(resid), CAppConsts.MaxLenExpectTxt);
          
          myitem.expecttxt = expstr;
          myitem.resulttxt = resstr;
@@ -172,9 +172,9 @@ public class CTextList extends CStringList
          String txtid = "ExpText" + myid;
          String resid = "ResText" + myid;
 
-         String expstr = CParser.truncStr(arequest.getParameter(txtid), CConsts.MaxLenExpectTxt);
+         String expstr = CParser.truncStr(arequest.getParameter(txtid), CAppConsts.MaxLenExpectTxt);
          if (expstr == null || expstr.length() == 0) continue;
-         String resstr = CParser.truncStr(arequest.getParameter(resid), CConsts.MaxLenExpectTxt);
+         String resstr = CParser.truncStr(arequest.getParameter(resid), CAppConsts.MaxLenExpectTxt);
          
          myitem.expectid = this.makeNewId("ert", 6);
          myitem.expecttxt = expstr;

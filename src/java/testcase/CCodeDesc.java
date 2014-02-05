@@ -34,9 +34,9 @@ public class CCodeDesc extends CStringList
    /** name of master table */
    private String masttbl;
    /** Filler for missing description. */
-   final static public String DescNotFound = CConsts.TagNoLabel;
+   final static public String DescNotFound = CAppConsts.TagNoLabel;
    /** Filler for missing code. */
-   final static public String CodeNotFound = CConsts.TagNoValue;
+   final static public String CodeNotFound = CAppConsts.TagNoValue;
 
    final static public String TokDropBegRec = "[";   
    final static public String TokDropEndRec = "]";   
@@ -105,7 +105,7 @@ public class CCodeDesc extends CStringList
        @return associated description. */
    public String getDescByCode(String acode)
    {
-      return(getDescByCode(CConsts.TagNoValue, acode));
+      return(getDescByCode(CAppConsts.TagNoValue, acode));
    }
    /** Get description for referenced master and code. 
        @param amast associated master value. 
@@ -251,7 +251,7 @@ public class CCodeDesc extends CStringList
             }
             else 
             {
-               myitem.mastval = CConsts.TagNoValue;
+               myitem.mastval = CAppConsts.TagNoValue;
                myitem.codeval = rset.getString(1);
                myitem.descval = rset.getString(2);
             }
@@ -263,7 +263,7 @@ public class CCodeDesc extends CStringList
       }
       catch (Exception ex)
       {
-         CLogError.logError(CConsts.ErrMsgFile, false, "CCodeDesc.dbReadList " + tablenm + " ", ex);
+         CLogError.logError(CAppConsts.ErrorFile, false, "CCodeDesc.dbReadList " + tablenm + " ", ex);
       }
       }
    }
@@ -273,7 +273,7 @@ public class CCodeDesc extends CStringList
        @return html markup string containing list of select options. */
    public String makeOptions(String acode)
    {
-      return(makeOptions(CConsts.TagNoValue, acode));
+      return(makeOptions(CAppConsts.TagNoValue, acode));
    }
 
    /** Build options to populate html select object from codes and descriptions. 

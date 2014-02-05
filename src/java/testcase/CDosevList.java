@@ -46,7 +46,7 @@ public class CDosevList extends CStringList
       }
       catch (Exception ex)
       {
-         CLogError.logError(CConsts.ErrMsgFile, false, "CDosevList.dbReadList cannot read list. ", ex);
+         CLogError.logError(CAppConsts.ErrorFile, false, "CDosevList.dbReadList cannot read list. ", ex);
       }
    }
       
@@ -61,7 +61,7 @@ public class CDosevList extends CStringList
       }
       catch (Exception ex)
       {
-         CLogError.logError(CConsts.ErrMsgFile, false, "CDosevList.dbDeleteList cannot delete list. ", ex);
+         CLogError.logError(CAppConsts.ErrorFile, false, "CDosevList.dbDeleteList cannot delete list. ", ex);
       }
    }
    
@@ -92,7 +92,7 @@ public class CDosevList extends CStringList
       }
       catch (Exception ex)
       {
-         CLogError.logError(CConsts.ErrMsgFile, false, "CDosevList.dbWriteList cannot write list. ", ex);
+         CLogError.logError(CAppConsts.ErrorFile, false, "CDosevList.dbWriteList cannot write list. ", ex);
       }
    }
 

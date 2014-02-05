@@ -26,14 +26,14 @@ public class CNonadItem
    {
       nonadmid = "";
       nonadmdate = new Date();
-      seriescd = CConsts.TagNoValue;
-      reasoncd = CConsts.TagNoValue;
-      dtfmt = new SimpleDateFormat(CConsts.DateFmtStr);
+      seriescd = CAppConsts.TagNoValue;
+      reasoncd = CAppConsts.TagNoValue;
+      dtfmt = new SimpleDateFormat(CAppConsts.DateFmtStr);
    }
    
    public String getYmdStr(Date adate)
    {
-      SimpleDateFormat ymdfmt = new SimpleDateFormat(CConsts.DateFmtYmd);
+      SimpleDateFormat ymdfmt = new SimpleDateFormat(CAppConsts.DateFmtYmd);
       return(ymdfmt.format(adate));
    }
    public String getNonadmDateStr()

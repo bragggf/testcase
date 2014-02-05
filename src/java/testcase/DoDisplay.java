@@ -29,39 +29,25 @@ public class DoDisplay extends HttpServlet
      HttpSession session = request.getSession(false);
       if (session == null)
       {
-         session.setAttribute("CurrAct", CConsts.LinkLoginPage);
-         RequestDispatcher rd = request.getRequestDispatcher(CConsts.LinkCentral);
+         session.setAttribute("CurrAct", CAppConsts.LinkLoginPage);
+         RequestDispatcher rd = request.getRequestDispatcher(CAppConsts.LinkCentral);
          rd.forward(request, response);
          return;
       }
-      CUserItem myuser = (CUserItem) session.getAttribute("UserItem");
-
-      manapp.CAppProps props = (manapp.CAppProps) session.getAttribute("AppProps");
-      if (props == null) 
-      {
-         props = new manapp.CAppProps(CConsts.AppPropFile);
-         session.setAttribute("AppProps", props);
-      }
-
-      manapp.CDbConnect dbconn = (manapp.CDbConnect) session.getAttribute("DbConn");
-      if (dbconn == null) 
-      {
-         dbconn = new manapp.CDbConnect(props.DbConfigFile, props.ErrorLogFile, props.ErrMsgEcho);
-         session.setAttribute("DbConn", dbconn);
-      }
+      
       String btntxt = request.getParameter("BtnAct");
       
       if (btntxt != null && btntxt.equals("Cancel"))
       {
          session.setAttribute("CurrAct", "StatusPage");
-         RequestDispatcher rd = request.getRequestDispatcher(CConsts.LinkCentral);
+         RequestDispatcher rd = request.getRequestDispatcher(CAppConsts.LinkCentral);
          rd.forward(request, response);
          return;
       }      
       
       // fall through -- return from whence you came
       session.setAttribute("CurrAct", "DisplayPage");
-      RequestDispatcher rd = request.getRequestDispatcher(CConsts.LinkCentral);
+      RequestDispatcher rd = request.getRequestDispatcher(CAppConsts.LinkCentral);
       rd.forward(request, response);
       return;
       

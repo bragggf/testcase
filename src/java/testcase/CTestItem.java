@@ -57,7 +57,7 @@ public class CTestItem
       createby = "";
       moddate = new Date();
       basedate = new Date();
-      testresult = CConsts.StatusNone;
+      testresult = CAppConsts.StatusNone;
       resultnotes = "";
       
       shotlist = new CShotList();
@@ -67,7 +67,7 @@ public class CTestItem
       evallist = new CEvalList();
       dosevlist = new CDosevList();
       
-      dtfmt = new SimpleDateFormat(CConsts.DateFmtStr);
+      dtfmt = new SimpleDateFormat(CAppConsts.DateFmtStr);
    }
 
    public String makeKey()
@@ -78,7 +78,7 @@ public class CTestItem
    
    public String getYmdStr(Date adate)
    {
-      SimpleDateFormat ymdfmt = new SimpleDateFormat(CConsts.DateFmtYmd);
+      SimpleDateFormat ymdfmt = new SimpleDateFormat(CAppConsts.DateFmtYmd);
       return(ymdfmt.format(adate));
    }
    public String getBirthDateStr()
@@ -158,7 +158,7 @@ public class CTestItem
       }
       catch (Exception ex)
       {
-         CLogError.logError(CConsts.ErrMsgFile, false, "CTestItem.dbReadItem cannot read item. ", ex);
+         CLogError.logError(CAppConsts.ErrorFile, false, "CTestItem.dbReadItem cannot read item. ", ex);
       }
    }
       
@@ -173,7 +173,7 @@ public class CTestItem
       }
       catch (Exception ex)
       {
-         CLogError.logError(CConsts.ErrMsgFile, false, "CTestItem.dbDeleteItem cannot delete item. ", ex);
+         CLogError.logError(CAppConsts.ErrorFile, false, "CTestItem.dbDeleteItem cannot delete item. ", ex);
       }
    }
    
@@ -208,7 +208,7 @@ public class CTestItem
       }
       catch (Exception ex)
       {
-         CLogError.logError(CConsts.ErrMsgFile, false, "CTestItem.dbWriteItem cannot write item. ", ex);
+         CLogError.logError(CAppConsts.ErrorFile, false, "CTestItem.dbWriteItem cannot write item. ", ex);
       }
    }
    
@@ -234,9 +234,9 @@ public class CTestItem
    
    public String getStatusStyle(String astatus)
    {
-      if (CConsts.StatusPass.equals(astatus)) return(CConsts.StylePass);
-      if (CConsts.StatusFail.equals(astatus)) return(CConsts.StyleFail);
-      return(CConsts.StyleNone);
+      if (CAppConsts.StatusPass.equals(astatus)) return(CAppConsts.StylePass);
+      if (CAppConsts.StatusFail.equals(astatus)) return(CAppConsts.StyleFail);
+      return(CAppConsts.StyleNone);
    }
    
    public void setTestStatus()
@@ -296,22 +296,22 @@ public class CTestItem
 
       retstr = retstr + "<dt class='details'><label for='TestTitle'>Test Name</label></dt>\n";
       retstr = retstr + "<dd class='details'><input type='text' name='TestTitle' id='TestTitle'" +
-            " maxlength=" + Integer.toString(CConsts.MaxLenTitle) + " value='" + testtitle + "'></dd>\n";
+            " maxlength=" + Integer.toString(CAppConsts.MaxLenTitle) + " value='" + testtitle + "'></dd>\n";
       retstr = retstr + "<dt class='details'><label for='CreateBy'>Author</label></dt>\n";
       retstr = retstr + "<dd class='details'><input type='text' name='CreateBy' id='CreateBy'" +
-            " maxlength=" + Integer.toString(CConsts.MaxLenName) + " value='" + createby + "'></dd>\n";
+            " maxlength=" + Integer.toString(CAppConsts.MaxLenName) + " value='" + createby + "'></dd>\n";
       retstr = retstr + "<dt class='details'>Modified Date</dt><dd class='details'>" + getModDateStr() + "</dd>\n";
       retstr = retstr + "<dt class='details'><label for='TestDesc'>Description</label></dt>\n";
       retstr = retstr + "<dd class='details'><textarea name='TestDesc' id='TestDesc' cols=80 rows=3" +
-            " onkeyup='javascript:EnforceMaxLen(this," + Integer.toString(CConsts.MaxLenNote) + ")'" +
+            " onkeyup='javascript:EnforceMaxLen(this," + Integer.toString(CAppConsts.MaxLenNote) + ")'" +
             ">" + testdesc + "</textarea></dd>\n";
       retstr = retstr + "<dt class='details'><label for='TestNote'>Notes</label></dt>\n";
       retstr = retstr + "<dd class='details'><textarea name='TestNote' id='TestNote' cols=80 rows=3" +
-            " onkeyup='javascript:EnforceMaxLen(this," + Integer.toString(CConsts.MaxLenNote) + ")'" +
+            " onkeyup='javascript:EnforceMaxLen(this," + Integer.toString(CAppConsts.MaxLenNote) + ")'" +
             ">" + testnote + "</textarea></dd>\n";
       retstr = retstr + "<dt class='details'><label for='BaseDate'>Base Date</label></dt>\n";
       retstr = retstr + "<dd class='details'><input type='text' name='BaseDate' id='BaseDate'" +
-            " maxlength=" + Integer.toString(CConsts.MaxLenDate) + " value='" + getBaseDateStr() + "'>" +
+            " maxlength=" + Integer.toString(CAppConsts.MaxLenDate) + " value='" + getBaseDateStr() + "'>" +
             "<input type='hidden' name='HideDate' id='HideDate' value='" + getBaseDateStr() + "'>" +
             " <a OnMouseDown='javascript:SwapBtn(\"Scale\",\"ScaleDn\")' " + 
                  "OnMouseUp='javascript:SwapBtn(\"Scale\",\"ScaleUp\")' " +
@@ -330,11 +330,11 @@ public class CTestItem
       retstr = retstr + "</tr>\n";
       retstr = retstr + "<tr>\n";
       retstr = retstr + "<td class='edits'><input type='text' name='FirstName' id='FirstName'" +
-            " maxlength=" + Integer.toString(CConsts.MaxLenName) + " value='" + firstname + "'></td>\n";
+            " maxlength=" + Integer.toString(CAppConsts.MaxLenName) + " value='" + firstname + "'></td>\n";
       retstr = retstr + "<td class='edits'><input type='text' name='LastName' id='LastName'" +
-            " maxlength=" + Integer.toString(CConsts.MaxLenName) + " value='" + lastname + "'></td>\n";
+            " maxlength=" + Integer.toString(CAppConsts.MaxLenName) + " value='" + lastname + "'></td>\n";
       retstr = retstr + "<td class='edits'><input type='text' name='BirthDate' id='BirthDate'" +
-            " maxlength=" + Integer.toString(CConsts.MaxLenDate) + " value='" + getBirthDateStr() + "'></td>\n";
+            " maxlength=" + Integer.toString(CAppConsts.MaxLenDate) + " value='" + getBirthDateStr() + "'></td>\n";
       retstr = retstr + "<td class='edits'><select name='Gender' id='Gender' size=1>\n" +
                         genders.makeOptions(gendercd) + "</select></td>\n";
       retstr = retstr + "</tr>\n";
@@ -350,7 +350,7 @@ public class CTestItem
       
       retstr = retstr + "<dt class='details'><label for='ResNotes'>Result Notes</label></dt>\n";
       retstr = retstr + "<dd class='details'><textarea name='ResNotes' id='ResNotes' cols=80 rows=3" +
-            " onkeyup='javascript:EnforceMaxLen(this," + Integer.toString(CConsts.MaxLenNote) + ")'" +
+            " onkeyup='javascript:EnforceMaxLen(this," + Integer.toString(CAppConsts.MaxLenNote) + ")'" +
             ">" + resultnotes + "</textarea></dd>\n";
       
       return(retstr);
@@ -361,18 +361,18 @@ public class CTestItem
       String group = arequest.getParameter("TestGroup");
       if (group != null) testgroupid = group;
         
-      testtitle = CParser.truncStr(arequest.getParameter("TestTitle"), CConsts.MaxLenTitle);
-      createby = CParser.truncStr(arequest.getParameter("CreateBy"), CConsts.MaxLenName);
-      testdesc = CParser.truncStr(arequest.getParameter("TestDesc"), CConsts.MaxLenNote);
-      testnote = CParser.truncStr(arequest.getParameter("TestNote"), CConsts.MaxLenNote);
-      String datstr = CParser.truncStr(arequest.getParameter("BaseDate"), CConsts.MaxLenDate);
+      testtitle = CParser.truncStr(arequest.getParameter("TestTitle"), CAppConsts.MaxLenTitle);
+      createby = CParser.truncStr(arequest.getParameter("CreateBy"), CAppConsts.MaxLenName);
+      testdesc = CParser.truncStr(arequest.getParameter("TestDesc"), CAppConsts.MaxLenNote);
+      testnote = CParser.truncStr(arequest.getParameter("TestNote"), CAppConsts.MaxLenNote);
+      String datstr = CParser.truncStr(arequest.getParameter("BaseDate"), CAppConsts.MaxLenDate);
       setBaseDate(datstr);
-      firstname = CParser.truncStr(arequest.getParameter("FirstName"), CConsts.MaxLenName);
-      lastname = CParser.truncStr(arequest.getParameter("LastName"), CConsts.MaxLenName);
-      datstr = CParser.truncStr(arequest.getParameter("BirthDate"), CConsts.MaxLenDate);
+      firstname = CParser.truncStr(arequest.getParameter("FirstName"), CAppConsts.MaxLenName);
+      lastname = CParser.truncStr(arequest.getParameter("LastName"), CAppConsts.MaxLenName);
+      datstr = CParser.truncStr(arequest.getParameter("BirthDate"), CAppConsts.MaxLenDate);
       setBirthDate(datstr);
       gendercd = arequest.getParameter("Gender");
-      resultnotes = CParser.truncStr(arequest.getParameter("ResNotes"), CConsts.MaxLenNote);
+      resultnotes = CParser.truncStr(arequest.getParameter("ResNotes"), CAppConsts.MaxLenNote);
       
       shotlist.updateItem(arequest, this.birthdate);
       nonadmlist.updateItem(arequest);

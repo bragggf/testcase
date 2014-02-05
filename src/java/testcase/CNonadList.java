@@ -46,7 +46,7 @@ public class CNonadList extends CStringList
       }
       catch (Exception ex)
       {
-         CLogError.logError(CConsts.ErrMsgFile, false, "CNonadList.dbReadList cannot read list. ", ex);
+         CLogError.logError(CAppConsts.ErrorFile, false, "CNonadList.dbReadList cannot read list. ", ex);
       }
    }
       
@@ -61,7 +61,7 @@ public class CNonadList extends CStringList
       }
       catch (Exception ex)
       {
-         CLogError.logError(CConsts.ErrMsgFile, false, "CNonadList.dbDeleteList cannot delete list. ", ex);
+         CLogError.logError(CAppConsts.ErrorFile, false, "CNonadList.dbDeleteList cannot delete list. ", ex);
       }
    }
    
@@ -91,7 +91,7 @@ public class CNonadList extends CStringList
       }
       catch (Exception ex)
       {
-         CLogError.logError(CConsts.ErrMsgFile, false, "CNonadList.dbWriteList cannot write list. ", ex);
+         CLogError.logError(CAppConsts.ErrorFile, false, "CNonadList.dbWriteList cannot write list. ", ex);
       }
    }
 
@@ -129,23 +129,23 @@ public class CNonadList extends CStringList
          retstr = retstr + "<tr><td class='edits'>" +
                "<label class='hidden' for='"+datid+"'>Date for non-administration " + Integer.toString(ivac) + "</label>" +
                "<input type='text' name='"+datid+"' id='"+datid+"' size=8" +
-               " maxlength=" + Integer.toString(CConsts.MaxLenDate) + " value='" + myitem.getNonadmDateStr() + "'></td>\n";
+               " maxlength=" + Integer.toString(CAppConsts.MaxLenDate) + " value='" + myitem.getNonadmDateStr() + "'></td>\n";
          retstr = retstr + "<td class='edits'>" +
                "<label class='hidden' for='"+serid+"'>Series for non-administration " + Integer.toString(ivac) + "</label>" +
                "<select name='"+serid+"' id='"+serid+"' size=1>\n";
-         retstr = retstr + "<option value='"+CConsts.TagNoValue+"'>" + CConsts.TagNoLabel + "</option>\n";
+         retstr = retstr + "<option value='"+CAppConsts.TagNoValue+"'>" + CAppConsts.TagNoLabel + "</option>\n";
          retstr = retstr + series.makeOptions(myitem.seriescd);
          retstr = retstr + "</select></td>\n";
 
          retstr = retstr + "<td class='edits'>";
          retstr = retstr + "<label class='hidden' for='"+reaid+"'>Reason for non-administration " + Integer.toString(ivac) + "</label>" +
                "<select name='"+reaid+"' id='"+reaid+"' size=1>\n";
-         retstr = retstr + "<option value='"+CConsts.TagNoValue+"'>" + CConsts.TagNoLabel + "</option>\n";
+         retstr = retstr + "<option value='"+CAppConsts.TagNoValue+"'>" + CAppConsts.TagNoLabel + "</option>\n";
          retstr = retstr + reasons.makeOptions(myitem.reasoncd);
          retstr = retstr + "</select></td></tr>\n";
       }      
       
-      int nslot = Math.max(CConsts.NewSlotNonAdmin, CConsts.NumSlotNonAdmin - getCount());
+      int nslot = Math.max(CAppConsts.NewSlotNonAdmin, CAppConsts.NumSlotNonAdmin - getCount());
       for (int idx = 0; idx < nslot; idx++)
       {
          ivac++;
@@ -157,19 +157,19 @@ public class CNonadList extends CStringList
          retstr = retstr + "<tr><td class='edits'>" +
                "<label class='hidden' for='"+datid+"'>Date for non-administration " + Integer.toString(ivac) + "</label>" +
                "<input type='text' name='"+datid+"' id='"+datid+"' size=8" +
-               " maxlength=" + Integer.toString(CConsts.MaxLenDate) + " value=''></td>\n";
+               " maxlength=" + Integer.toString(CAppConsts.MaxLenDate) + " value=''></td>\n";
          retstr = retstr + "<td class='edits'>" +
                "<label class='hidden' for='"+serid+"'>Series for non-administration " + Integer.toString(ivac) + "</label>" +
                "<select name='"+serid+"' id='"+serid+"' size=1>\n";
-         retstr = retstr + "<option value='"+CConsts.TagNoValue+"'>" + CConsts.TagNoLabel + "</option>\n";
-         retstr = retstr + series.makeOptions(CConsts.TagNoValue);
+         retstr = retstr + "<option value='"+CAppConsts.TagNoValue+"'>" + CAppConsts.TagNoLabel + "</option>\n";
+         retstr = retstr + series.makeOptions(CAppConsts.TagNoValue);
          retstr = retstr + "</select></td>\n";
 
          retstr = retstr + "<td class='edits'>";
          retstr = retstr + "<label class='hidden' for='"+reaid+"'>Reason for non-administration " + Integer.toString(ivac) + "</label>" +
                "<select name='"+reaid+"' id='"+reaid+"' size=1>\n";
-         retstr = retstr + "<option value='"+CConsts.TagNoValue+"'>" + CConsts.TagNoLabel + "</option>\n";
-         retstr = retstr + reasons.makeOptions(CConsts.TagNoValue);
+         retstr = retstr + "<option value='"+CAppConsts.TagNoValue+"'>" + CAppConsts.TagNoLabel + "</option>\n";
+         retstr = retstr + reasons.makeOptions(CAppConsts.TagNoValue);
          retstr = retstr + "</select></td></tr>\n";
       }
       retstr = retstr + "</table></dd>\n";
@@ -185,7 +185,7 @@ public class CNonadList extends CStringList
          String serid = "NonSeries" + myitem.nonadmid;
          String reaid = "NonReason" + myitem.nonadmid;
          
-         String datstr = CParser.truncStr(arequest.getParameter(datid), CConsts.MaxLenDate);
+         String datstr = CParser.truncStr(arequest.getParameter(datid), CAppConsts.MaxLenDate);
          if (datstr == null || datstr.length() == 0) 
          {
             this.delItem(idx);
@@ -199,7 +199,7 @@ public class CNonadList extends CStringList
          myitem.reasoncd = reastr;
       }
       
-      int nslot = Math.max(CConsts.NewSlotNonAdmin, CConsts.NumSlotNonAdmin - getCount());
+      int nslot = Math.max(CAppConsts.NewSlotNonAdmin, CAppConsts.NumSlotNonAdmin - getCount());
       for (int idx = 0; idx < nslot; idx++)
       {
          CNonadItem myitem = new CNonadItem();
@@ -208,7 +208,7 @@ public class CNonadList extends CStringList
          String serid = "NonSeries" + myid;
          String reaid = "NonReason" + myid;
 
-         String datstr = CParser.truncStr(arequest.getParameter(datid), CConsts.MaxLenDate);
+         String datstr = CParser.truncStr(arequest.getParameter(datid), CAppConsts.MaxLenDate);
          if (datstr == null || datstr.length() == 0) continue;
          String serstr = arequest.getParameter(serid);
          String reastr = arequest.getParameter(reaid);

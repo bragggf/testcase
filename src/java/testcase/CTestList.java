@@ -56,7 +56,7 @@ public class CTestList extends CStringList
       }
       catch (Exception ex)
       {
-         CLogError.logError(CConsts.ErrMsgFile, false, "CTestList.dbReadList cannot read list. ", ex);
+         CLogError.logError(CAppConsts.ErrorFile, false, "CTestList.dbReadList cannot read list. ", ex);
       }
    }
    
